@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الكلية - الرئيسية</title>
+    <style>
+        /* التنسيقات العامة */
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: #f0f2f5; 
+            margin: 0; 
+            text-align: center; 
+            color: #2c3e50;
+        }
+
+        /* رأس الصفحة */
+        header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 60px 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: bold; }
+        header p { opacity: 0.8; margin-top: 10px; }
+
+        /* حاوية الأزرار */
+        .nav-container { 
+            margin-top: 30px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            flex-wrap: wrap; 
+        }
+
+        /* تصميم الأزرار الموحد */
+        .nav-btn { 
+            display: inline-flex; 
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-map { background: #3498db; }
+        .btn-map:hover { background: #2980b9; transform: translateY(-3px); }
+
+        .btn-table { background: #27ae60; }
+        .btn-table:hover { background: #219150; transform: translateY(-3px); }
+
+        /* صنف جديد لزر الحاسبة لضمان التنسيق */
+        .btn-gpa { background: #f39c12; }
+        .btn-gpa:hover { background: #e67e22; transform: translateY(-3px); }
+
+        /* محتوى إضافي أسفل الأزرار */
+        .content-area {
+            padding: 50px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مرحباً بك في بوابة القسم العام</h1>
+    <p>كلية هندسة النفط والغاز والطاقات المتجددة</p>
+    
+    <div class="nav-container">
+        <a href="subjects.html" class="nav-btn btn-map">🌳 دليل المواد (الخريطة)</a>
+        
+        <a href="table.html" class="nav-btn btn-table">📊 الجدول التنظيمي</a>
+
+        <a href="gpa.html" class="nav-btn btn-gpa">🧮 حاسبة المعدل</a>
+    </div>
+</header>
+
+<div class="content-area">
+    <h2>الوصول السريع للمعلومات الأكاديمية</h2>
+    <p>هذا الموقع مصمم لمساعدة الطلاب في تتبع مساراتهم الدراسية وحساب معدلاتهم وتنسيق جداولهم الأسبوعية بسهولة.</p>
+</div>
+
+</body>
+</html>
