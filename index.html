@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>بوابة الكلية - الرئيسية</title>
+    <style>
+        /* التنسيقات العامة */
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: #f0f2f5; 
+            margin: 0; 
+            text-align: center; 
+            color: #2c3e50;
+        }
+
+        /* رأس الصفحة */
+        header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 60px 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: 300; }
+        header p { opacity: 0.8; margin-top: 10px; }
+
+        /* حاوية الأزرار */
+        .nav-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+        /* تصميم الأزرار */
+        .nav-btn { 
+            display: inline-flex; 
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* زر الخريطة (أزرق) */
+        .btn-map { background: #3498db; }
+        .btn-map:hover { background: #2980b9; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3); }
+
+        /* زر الجدول (أخضر) */
+        .btn-table { background: #27ae60; }
+        .btn-table:hover { background: #219150; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3); }
+
+        /* محتوى الصفحة */
+        .container { padding: 40px 20px; max-width: 900px; margin: 0 auto; }
+        
+        table { 
+            width: 100%; 
+            margin-top: 20px; 
+            border-collapse: collapse; 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: center; }
+        th { background: #34495e; color: white; }
+        tr:hover { background: #f8f9fa; }
+        
+        h2 { margin-bottom: 20px; font-weight: 400; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مرحباً بك في بوابة القسم</h1>
+    <p>نظام إدارة المواد والمسارات الدراسية الأكاديمية</p>
+    
+    <div class="nav-container">
+        <a href="subjects.html" class="nav-btn btn-map">🌳 دليل المواد (الخريطة)</a>
+        
+        <a href="table.html" class="nav-btn btn-table">📊 قائمة المواد (الجدول)</a>
+    </div>
+</header>
+
+<div class="container">
+    <h2>📅 الجدول الدراسي الحالي</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>اليوم</th>
+                <th>المادة</th>
+                <th>الوقت</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>الأحد</td><td>برمجة</td><td>08:30 ص</td></tr>
+            <tr><td>الاثنين</td><td>شبكات</td><td>10:30 ص</td></tr>
+            <tr><td>الثلاثاء</td><td>تحليل عددي</td><td>01:00 م</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
