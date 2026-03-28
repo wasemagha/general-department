@@ -12,6 +12,9 @@
             margin: 0; 
             text-align: center; 
             color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* رأس الصفحة */
@@ -55,15 +58,31 @@
         .btn-table { background: #27ae60; }
         .btn-table:hover { background: #219150; transform: translateY(-3px); }
 
-        /* صنف جديد لزر الحاسبة لضمان التنسيق */
         .btn-gpa { background: #f39c12; }
         .btn-gpa:hover { background: #e67e22; transform: translateY(-3px); }
 
-        /* محتوى إضافي أسفل الأزرار */
+        /* محتوى إضافي */
         .content-area {
             padding: 50px 20px;
             max-width: 800px;
             margin: 0 auto;
+            flex-grow: 1; /* لجعل التذييل في الأسفل دائماً */
+        }
+
+        /* تذييل الصفحة (Footer) */
+        footer {
+            margin-top: auto;
+            padding: 30px 20px;
+            background: #ffffff;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .visitor-stats {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -75,9 +94,7 @@
     
     <div class="nav-container">
         <a href="subjects.html" class="nav-btn btn-map">🌳 دليل المواد (الخريطة)</a>
-        
         <a href="table.html" class="nav-btn btn-table">📊 الجدول التنظيمي</a>
-
         <a href="gpa.html" class="nav-btn btn-gpa">🧮 حاسبة المعدل</a>
     </div>
 </header>
@@ -87,13 +104,13 @@
     <p>هذا الموقع مصمم لمساعدة الطلاب في تتبع مساراتهم الدراسية وحساب معدلاتهم وتنسيق جداولهم الأسبوعية بسهولة.</p>
 </div>
 
-<footer style="margin-top: 50px; padding: 20px; border-top: 1px solid #ddd; background: #fff;">
-        <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">إحصائيات الوصول للبوابة</p>
-        
-        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwasemagha.github.io%2Fgeneral-department&count_bg=%23F39C12&title_bg=%232C3E50&icon=&icon_color=%23E7E7E7&title=%D8%A7%D9%84%D8%B2%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA&edge_flat=false" alt="Visitor Count">
-        
-        <p style="margin-top: 15px; font-size: 0.8rem; color: #95a5a6;">جميع الحقوق محفوظة &copy; 2026</p>
-    </footer>
+<footer>
+    <div class="visitor-stats">
+        <span style="color: #7f8c8d; font-size: 0.9rem; margin-left: 10px;">إحصائيات الزوار:</span>
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwasemagha.github.io%2Fgeneral-department&count_bg=%23F39C12&title_bg=%232C3E50&icon=&icon_color=%23E7E7E7&title=%D8%A7%D9%84%D8%B2%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA&edge_flat=false" alt="Visitor Count" style="vertical-align: middle;">
+    </div>
+    <p style="margin-top: 15px; font-size: 0.8rem; color: #bdc3c7;">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
+</footer>
 
 </body>
 </html>
