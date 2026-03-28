@@ -67,7 +67,7 @@
             flex-grow: 1;
         }
 
-        /* تذييل الصفحة وتنسيق العداد البيضاوي */
+        /* تذييل الصفحة وتنسيق العداد */
         footer {
             background-color: #ffffff;
             padding: 40px 20px;
@@ -81,18 +81,21 @@
             font-weight: bold;
         }
 
+        /* حاوية العداد (الشكل البيضاوي) */
         .counter-oval {
             display: inline-block;
             background-color: #2c3e50; /* الإطار الكحلي */
-            padding: 15px 35px;
+            padding: 10px 30px;
             border-radius: 50px; /* شكل بيضاوي */
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border: 2px solid #f39c12; /* تحديد برتقالي خفيف للتناسق */
+            border: 2px solid #f39c12; /* تحديد برتقالي خفيف للتناسق مع زر الحاسبة */
         }
 
+        /* تنسيق كرات البلياردو */
         .counter-oval img {
             vertical-align: middle;
-            max-height: 35px; /* لضمان وضوح الأرقام */
+            height: 45px; /* حجم مثالي لكرات البلياردو */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .copyright {
@@ -117,13 +120,13 @@
 
     <div class="content-area">
         <h2>الوصول السريع للمعلومات الأكاديمية</h2>
-        <p>منصة طلابية متكاملة مصممة لتسهيل متابعة المسيرة الدراسية، عرض جداول المحاضرات، وحساب المعدلات بدقة.</p>
+        <p>منصة طلابية متكاملة تهدف لتسهيل متابعة المسيرة الدراسية، عرض الجداول، وحساب المعدلات بدقة.</p>
     </div>
 
     <footer>
         <span class="counter-label">إحصائيات زيارة البوابة</span>
         <div class="counter-oval">
-            <img src="https://count.getloli.com/get/@wasem-portal?theme=rule_734" alt="Visitor Counter">
+            <img src="https://count.getloli.com/get/@wasem-portal?theme=gel_billiards" alt="Visitor Counter">
         </div>
         <p class="copyright">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
     </footer>
