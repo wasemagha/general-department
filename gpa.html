@@ -1,115 +1,281 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <title>حاسبة المعدل التراكمي - القسم العام</title>
+    <meta name="viewport" content="width=1200, initial-scale=0.4">
+    <title>حاسبة المعدل | كلية الهندسة - جامعة الزاوية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 800px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-        h2 { color: #2c3e50; margin: 0; }
-        .back-btn { text-decoration: none; color: #3498db; font-weight: bold; font-size: 14px; }
-        
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th { background-color: #f8fafc; padding: 12px; text-align: center; color: #64748b; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
-        
-        input, select { width: 90%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 5px; text-align: center; }
-        
-        .result-box { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; display: flex; justify-content: space-around; font-size: 1.2rem; margin-top: 20px; }
-        .result-item span { display: block; font-size: 0.8rem; opacity: 0.8; margin-bottom: 5px; }
+        :root { 
+            --primary: #2c3e50; --secondary: #f39c12; --bg: #f4f7f6; 
+            --white: #ffffff; --danger: #e74c3c; --success: #27ae60; --muted: #7f8c8d;
+            --card-border: #eee; --input-bg: #ffffff; --text-color: #333;
+            --panel-bg: #f8fafc; --table-head: #f1f5f9;
+        }
 
-        .add-row-btn { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
-        .add-row-btn:hover { background: #219150; }
+        /* تنسيقات الوضع المظلم عند التفعيل */
+        [data-theme="dark"] {
+            --bg: #121212;
+            --white: #1e1e1e;
+            --primary: #ecf0f1;
+            --text-color: #e0e0e0;
+            --card-border: #333;
+            --input-bg: #2d2d2d;
+            --panel-bg: #1a1a1a;
+            --table-head: #252525;
+            --muted: #bdc3c7;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 40px; color: var(--text-color); transition: 0.3s; }
+        .container { max-width: 1250px; margin: auto; background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        
+        header { border-bottom: 3px solid var(--secondary); padding-bottom: 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .back-link { text-decoration: none; color: var(--primary); font-weight: bold; background: #ebedef; padding: 12px 25px; border-radius: 15px; }
+
+        /* تنسيق الأزرار في الهيدر */
+        .header-btns { display: flex; gap: 10px; align-items: center; }
+        .theme-btn { padding: 12px 20px; background: var(--primary); color: var(--white); border: 2px solid var(--secondary); border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+
+        .controls-panel { background: var(--panel-bg); padding: 25px; border-radius: 20px; margin-bottom: 30px; display: flex; gap: 40px; border: 1px solid var(--card-border); align-items: center; }
+        input[type="number"], select { padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-weight: bold; background-color: var(--input-bg); color: var(--text-color); }
+        input[type="number"] { width: 80px; text-align: center; }
+
+        .sem-section { margin-bottom: 40px; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; page-break-inside: avoid; }
+        .sem-head { background: var(--table-head); padding: 15px 25px; display: flex; justify-content: space-between; font-weight: bold; align-items: center; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th { background: var(--panel-bg); padding: 15px; font-size: 0.85rem; border-bottom: 2px solid var(--card-border); color: var(--muted); }
+        td { padding: 12px; border-bottom: 1px solid var(--card-border); text-align: center; }
+
+        .grade-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; display: inline-block; min-width: 75px; }
+        .grade-excel { background: #d4edda !important; color: #155724 !important; }
+        .grade-vgood { background: #cce5ff !important; color: #004085 !important; }
+        .grade-good { background: #fff3cd !important; color: #856404 !important; }
+        .grade-pass { background: #e2e3e5 !important; color: #383d41 !important; }
+        .grade-fail { background: #f8d7da !important; color: #721c24 !important; }
+
+        .re-btn { padding: 8px 18px; border-radius: 25px; border: 1px solid #ddd; background: var(--input-bg); color: var(--text-color); cursor: pointer; transition: 0.2s; }
+        .re-btn.active { background: var(--danger) !important; color: white !important; border-color: var(--danger); font-weight: bold; }
+
+        .floating-results { 
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            background: #2c3e50; color: white; padding: 18px 60px; border-radius: 100px; 
+            display: flex; gap: 60px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 3px solid var(--secondary); z-index: 1000;
+        }
+
+        #print-summary { display: none; margin-top: 30px; padding: 30px; border: 3px solid #2c3e50; border-radius: 20px; background: #fff; color: #000; }
+
+        @media print {
+            .no-print, .floating-results, .back-link, .header-btns, button { display: none !important; }
+            body { padding: 0; background: white; color: black; }
+            .container { box-shadow: none; width: 100%; border: none; padding: 0; }
+            #print-summary { display: block !important; }
+            .sem-section { border: 1px solid #000; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h2>🧮 حاسبة المعدل الدراسي</h2>
-            <a href="index.html" class="back-btn">🏠 العودة للرئيسية</a>
+<div class="container">
+    <header>
+        <a href="index.html" class="back-link no-print">🏠 الرئيسية</a>
+        <h2 style="margin:0; color: var(--primary);">حاسبة التقديرات | شجرة المواد الرسمية</h2>
+        <div class="header-btns no-print">
+            <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 وضع ليلي</button>
+            <button onclick="window.print()" style="padding:12px 25px; background:var(--secondary); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">🖨️ طباعة</button>
         </div>
+    </header>
 
-        <button class="add-row-btn" onclick="addRow()">+ إضافة مادة جديدة</button>
-
-        <table id="gpaTable">
-            <thead>
-                <tr>
-                    <th>المادة (اختياري)</th>
-                    <th>عدد الساعات</th>
-                    <th>الدرجة (من 100)</th>
-                    <th>حذف</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <tr>
-                    <td><input type="text" placeholder="مثلاً: رياضة 1"></td>
-                    <td><input type="number" class="hours" value="3" min="1" oninput="calculateGPA()"></td>
-                    <td><input type="number" class="grade" value="0" min="0" max="100" oninput="calculateGPA()"></td>
-                    <td><button onclick="this.parentElement.parentElement.remove(); calculateGPA();" style="color:red; border:none; background:none; cursor:pointer;">❌</button></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="result-box">
-            <div class="result-item">
-                <span>إجمالي الساعات</span>
-                <div id="totalHours">3</div>
-            </div>
-            <div class="result-item">
-                <span>المعدل الفصلي (%)</span>
-                <div id="gpaResult">0.00%</div>
-            </div>
-            <div class="result-item">
-                <span>التقدير العام</span>
-                <div id="gradeText">-</div>
-            </div>
+    <div class="controls-panel no-print">
+        <div>
+            <label>عدد الفصول:</label>
+            <input type="number" id="semCount" min="1" max="10" value="1" onchange="initApp()">
+        </div>
+        <div style="flex-grow:1">
+            <label>المعدل المستهدف (%):</label>
+            <input type="number" id="targetGPA" value="80" oninput="calculate()">
+            <span id="targetMsg" style="margin-right:15px; font-weight:bold;"></span>
         </div>
     </div>
 
-    <script>
-        function addRow() {
-            const tbody = document.getElementById('tableBody');
-            const row = `<tr>
-                <td><input type="text" placeholder="اسم المادة"></td>
-                <td><input type="number" class="hours" value="3" min="1" oninput="calculateGPA()"></td>
-                <td><input type="number" class="grade" value="0" min="0" max="100" oninput="calculateGPA()"></td>
-                <td><button onclick="this.parentElement.parentElement.remove(); calculateGPA();" style="color:red; border:none; background:none; cursor:pointer;">❌</button></td>
-            </tr>`;
-            tbody.insertAdjacentHTML('beforeend', row);
+    <div id="semestersList"></div>
+
+    <div id="print-summary">
+        <h2 style="text-align: center;">تقرير المعدل الأكاديمي</h2>
+        <h4 style="text-align: center;">كلية الهندسة - جامعة الزاوية</h4>
+        <table style="width: 100%; font-size: 1.3rem; text-align: right; margin-top: 20px; color: black;">
+            <tr>
+                <td><b>المعدل التراكمي:</b></td>
+                <td id="p-gpa" style="color: #f39c12; font-size: 1.8rem; font-weight: 900;">0.00%</td>
+                <td><b>التقدير العام:</b></td>
+                <td id="p-grade" style="font-weight: bold;">-</td>
+            </tr>
+            <tr>
+                <td><b>الوحدات المنجزة:</b></td>
+                <td id="p-units">0</td>
+                <td><b>التاريخ:</b></td>
+                <td>2026/03/28</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="floating-results no-print">
+        <div style="text-align: center;"><small style="opacity:0.7">التراكمي العام</small><br><b id="f-gpa" style="color:var(--secondary); font-size:1.6rem;">0.00%</b></div>
+        <div style="text-align: center;"><small style="opacity:0.7">التقدير العام</small><br><b id="f-grade">-</b></div>
+        <div style="text-align: center;"><small style="opacity:0.7">إجمالي الوحدات</small><br><b id="f-units">0</b></div>
+    </div>
+</div>
+
+<script>
+    // نظام تبديل الثيم
+    function toggleTheme() {
+        const body = document.documentElement;
+        const currentTheme = body.getAttribute('data-theme');
+        const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('theme', targetTheme);
+        document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
+    }
+
+    const subjectsData = [
+        { name: "رياضة 1 (GS101)", hours: 3 },
+        { name: "رياضة 2 (GS102)", hours: 4 },
+        { name: "رياضة 3 (GS203)", hours: 3 },
+        { name: "رياضة 4 (GS204)", hours: 3 },
+        { name: "برمجة حاسوب (GS200)", hours: 3 },
+        { name: "الإحصاء والاحتمالات (GS206)", hours: 3 },
+        { name: "التحليل العددي (GS309)", hours: 3 },
+        { name: "استاتيكا (GE121)", hours: 3 },
+        { name: "ديناميكا (GE222)", hours: 3 },
+        { name: "كيمياء عامة (GS115)", hours: 3 },
+        { name: "كيمياء معمل (L115-GS)", hours: 1 },
+        { name: "فيزياء 1 (GS111)", hours: 3 },
+        { name: "فيزياء 2 (GS112)", hours: 3 },
+        { name: "فيزياء معمل (L112-GS)", hours: 1 },
+        { name: "أسس هندسة كهربائية (GE280)", hours: 3 },
+        { name: "رسم هندسي (GS126)", hours: 3 },
+        { name: "لغة إنجليزية 1 (GH141)", hours: 2 },
+        { name: "لغة إنجليزية 2 (GH142)", hours: 2 },
+        { name: "لغة إنجليزية 3 (GH241)", hours: 2 },
+        { name: "كتابة التقارير (GH450)", hours: 2 },
+        { name: "لغة عربية 1 (GH150)", hours: 2 },
+        { name: "لغة عربية 2 (GH151)", hours: 2 },
+        { name: "ثقافة وطنية (GH299)", hours: 2 }
+    ];
+
+    function getGradeInfo(score) {
+        if (score >= 85) return { text: "ممتاز", class: "grade-excel" };
+        if (score >= 75) return { text: "جيد جداً", class: "grade-vgood" };
+        if (score >= 65) return { text: "جيد", class: "grade-good" };
+        if (score >= 50) return { text: "مقبول", class: "grade-pass" };
+        if (score > 0) return { text: "ضعيف", class: "grade-fail" };
+        return { text: "-", class: "" };
+    }
+
+    function initApp() {
+        const count = document.getElementById('semCount').value;
+        const container = document.getElementById('semestersList');
+        container.innerHTML = '';
+        for (let i = 1; i <= count; i++) {
+            container.innerHTML += `
+                <div class="sem-section">
+                    <div class="sem-head">
+                        <span>الفصل الدراسي ${i}</span>
+                        <div style="display:flex; gap:20px; align-items:center;">
+                            <span id="sem-avg-${i}" style="font-weight:bold;">0.00%</span>
+                            <span id="sem-grade-${i}" class="grade-badge"></span>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المادة (الرمز)</th><th style="width:10%">الوحدات</th><th style="width:12%">الدرجة</th>
+                                <th style="width:15%">التقدير</th><th style="width:15%">الإعادة</th><th class="no-print" style="width:8%"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-${i}"></tbody>
+                    </table>
+                    <button class="no-print" style="margin:15px; cursor:pointer; padding:8px 15px; border-radius:8px; background:var(--primary); color:var(--white); border:none;" onclick="addRow(${i})">+ إضافة مادة من الشجرة</button>
+                </div>`;
+            addRow(i);
         }
+        calculate();
+    }
 
-        function calculateGPA() {
-            const hoursElements = document.getElementsByClassName('hours');
-            const gradeElements = document.getElementsByClassName('grade');
-            
-            let totalWeightedGrades = 0;
-            let totalHours = 0;
+    function addRow(semId) {
+        const tbody = document.getElementById(`tbody-${semId}`);
+        const tr = document.createElement('tr');
+        let options = subjectsData.map(s => `<option value="${s.hours}">${s.name}</option>`).join('');
+        tr.innerHTML = `
+            <td><select onchange="updateRow(this)" style="width:90%; padding:5px;"><option value="0">-- اختر من الشجرة --</option>${options}<option value="custom">مادة أخرى (يدوي)</option></select></td>
+            <td><input type="number" class="h-val" value="0" readonly style="border:none; background:none; text-align:center; width:40px;"></td>
+            <td><input type="number" class="g-val" value="0" oninput="calculate()" style="width:55px; font-weight:bold;"></td>
+            <td><span class="grade-badge">-</span></td>
+            <td><button class="re-btn" onclick="this.classList.toggle('active'); calculate();">إعادة</button></td>
+            <td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calculate();" style="border:none; background:none; cursor:pointer;">🗑️</button></td>`;
+        tbody.appendChild(tr);
+    }
 
-            for (let i = 0; i < hoursElements.length; i++) {
-                const h = parseFloat(hoursElements[i].value) || 0;
-                const g = parseFloat(gradeElements[i].value) || 0;
+    function updateRow(sel) {
+        const hInput = sel.parentElement.nextElementSibling.querySelector('.h-val');
+        if(sel.value === "custom") { hInput.readOnly = false; hInput.style.border = "1px solid #ddd"; hInput.value = 2; }
+        else { hInput.readOnly = true; hInput.style.border = "none"; hInput.value = sel.value; }
+        calculate();
+    }
+
+    function calculate() {
+        let tp = 0, tu = 0;
+        const target = parseFloat(document.getElementById('targetGPA').value) || 0;
+
+        document.querySelectorAll('.sem-section').forEach((sec, idx) => {
+            let sp = 0, su = 0;
+            sec.querySelectorAll('tbody tr').forEach(row => {
+                const h = parseFloat(row.querySelector('.h-val').value) || 0;
+                const g = parseFloat(row.querySelector('.g-val').value) || 0;
+                const isR = row.querySelector('.re-btn').classList.contains('active');
                 
-                totalWeightedGrades += (g * h);
-                totalHours += h;
-            }
+                const mGrade = getGradeInfo(g);
+                const badge = row.querySelector('.grade-badge');
+                badge.innerText = mGrade.text;
+                badge.className = 'grade-badge ' + mGrade.class;
 
-            const gpa = totalHours > 0 ? (totalWeightedGrades / totalHours) : 0;
-            
-            document.getElementById('totalHours').innerText = totalHours;
-            document.getElementById('gpaResult').innerText = gpa.toFixed(2) + "%";
-            
-            // تحديد التقدير
-            let text = "-";
-            if (gpa >= 85) text = "ممتاز";
-            else if (gpa >= 75) text = "جيد جداً";
-            else if (gpa >= 65) text = "جيد";
-            else if (gpa >= 50) text = "مقبول";
-            else if (gpa > 0) text = "ضعيف";
-            
-            document.getElementById('gradeText').innerText = text;
+                if (h > 0) {
+                    if (!isR) { tp += (g * h); tu += h; }
+                    sp += (g * h); su += h;
+                }
+            });
+            const sAvg = su > 0 ? (sp / su).toFixed(2) : "0.00";
+            document.getElementById(`sem-avg-${idx+1}`).innerText = sAvg + "%";
+            const sGrade = getGradeInfo(parseFloat(sAvg));
+            const sBadge = document.getElementById(`sem-grade-${idx+1}`);
+            sBadge.innerText = sGrade.text;
+            sBadge.className = 'grade-badge ' + sGrade.class;
+        });
+
+        const gpa = tu > 0 ? (tp / tu).toFixed(2) : "0.00";
+        const gInfo = getGradeInfo(parseFloat(gpa));
+
+        ['f', 'p'].forEach(p => {
+            document.getElementById(`${p}-gpa`).innerText = gpa + "%";
+            document.getElementById(`${p}-units`).innerText = tu;
+            document.getElementById(`${p}-grade`).innerText = gInfo.text;
+        });
+
+        const msg = document.getElementById('targetMsg');
+        if (parseFloat(gpa) > 0) {
+            msg.innerText = gpa >= target ? "✅ تم تحقيق الهدف" : `🛑 متبقي للهدف: ${(target - gpa).toFixed(2)}%`;
+            msg.style.color = gpa >= target ? "var(--success)" : "var(--danger)";
         }
-    </script>
+    }
+
+    window.onload = function() {
+        // استعادة الثيم المفضل
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
+        initApp();
+    };
+</script>
 </body>
 </html>

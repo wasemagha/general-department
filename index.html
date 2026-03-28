@@ -1,161 +1,188 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1400, initial-scale=0.3">
-    <title>بوابة الكلية - الرئيسية</title>
+    <title>بوابة القسم العام | لوحة التحكم</title>
     
     <style>
-        /* 1. التنسيقات الأساسية */
+        /* 1. المتغيرات الأصلية مع إضافة متغيرات الوضع الليلي */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #f39c12;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --text-muted: #7f8c8d;
+            --header-gradient: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+        }
+
+        /* 2. تبديل الألوان في الوضع الليلي فقط */
+        [data-theme="dark"] {
+            --bg: #121212;
+            --white: #1e1e1e;
+            --primary: #ecf0f1;
+            --text-muted: #bdc3c7;
+            --header-gradient: linear-gradient(135deg, #000000 0%, #1a252f 100%);
+        }
+
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: var(--bg); 
             margin: 0; 
-            padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             text-align: center; 
-            color: #2c3e50;
+            color: var(--primary); /* جعل اللون يتغير مع الثيم */
+            transition: 0.3s;
         }
 
-        /* 2. رأس الصفحة (Header) */
         header { 
-            background: #2c3e50; 
-            color: white; 
-            padding: 60px 20px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: var(--header-gradient);
+            color: #ffffff; /* يبقى أبيض دائماً في الهيدر */
+            padding: 100px 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-bottom: 5px solid var(--secondary);
+            position: relative;
         }
 
-        header h1 { margin: 0; font-size: 2.2rem; font-weight: bold; }
-        header p { opacity: 0.8; margin-top: 10px; font-size: 1.1rem; }
+        header h1 { margin: 0; font-size: 3rem; font-weight: 800; }
+        header p { opacity: 0.9; margin-top: 15px; font-size: 1.3rem; }
 
-        /* 3. حاوية الأزرار والتنقل */
-        .nav-container { 
-            margin-top: 30px; 
-            display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            flex-wrap: wrap; 
+        /* زر التبديل - تمت إضافته بشكل لا يخرب التصميم */
+        .theme-toggle-container {
+            position: absolute;
+            top: 20px;
+            left: 30px;
         }
 
-        .nav-btn { 
-            display: inline-flex; 
-            align-items: center;
-            gap: 10px;
-            padding: 15px 35px; 
-            color: white !important; 
-            text-decoration: none; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        /* ألوان الأزرار المخصصة */
-        .btn-map   { background-color: #3498db; }
-        .btn-table { background-color: #27ae60; }
-        .btn-gpa   { background-color: #f39c12; }
-
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); opacity: 0.9; }
-
-        /* 4. منطقة المحتوى الرئيسي */
-        .content-area {
-            padding: 60px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            flex-grow: 1;
-        }
-
-        .content-area h2 { color: #34495e; margin-bottom: 20px; }
-        .content-area p { line-height: 1.6; color: #7f8c8d; font-size: 1.1rem; }
-
-        /* 5. تذييل الصفحة وتنسيق العداد المبرمج */
-        footer {
-            background-color: #ffffff;
-            padding: 40px 20px;
-            border-top: 1px solid #e1e8ed;
-        }
-
-        .counter-label {
-            display: block;
-            margin-bottom: 15px;
-            color: #7f8c8d;
+        .toggle-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border-color: var(--secondary);
+        }
+
+        .card-icon { font-size: 4rem; margin-bottom: 20px; }
+        .card h3 { margin: 10px 0; color: var(--primary); font-size: 1.7rem; font-weight: 700; }
+        .card p { color: var(--text-muted); line-height: 1.6; font-size: 1rem; }
+
+        footer {
+            background-color: var(--white);
+            padding: 50px 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            margin-top: auto;
         }
 
         .counter-oval {
             display: inline-flex;
             align-items: center;
-            background-color: #2c3e50; /* الإطار الكحلي */
-            padding: 10px 35px;
-            border-radius: 50px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border: 2px solid #f39c12; /* تحديد برتقالي */
-            color: #f39c12; /* لون الأرقام برتقالي واضح */
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.8rem;
-            font-weight: bold;
-            direction: ltr; /* لضمان ترتيب الأصفار من اليسار */
-        }
-
-        .copyright {
-            margin-top: 25px;
-            font-size: 0.8rem;
-            color: #bdc3c7;
+            background-color: #2c3e50; /* يبقى كحلياً لإعطاء تباين */
+            padding: 15px 45px;
+            border-radius: 100px; 
+            border: 3px solid var(--secondary);
+            color: var(--secondary);
+            font-family: 'Courier New', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>مرحباً بك في بوابة القسم العام</h1>
-        <p>كلية هندسة النفط والغاز والطاقات المتجددة</p>
-        
-        <div class="nav-container">
-            <a href="subjects.html" class="nav-btn btn-map">🌳 دليل المواد (الخريطة)</a>
-            <a href="table.html" class="nav-btn btn-table">📊 الجدول التنظيمي</a>
-            <a href="gpa.html" class="nav-btn btn-gpa">🧮 حاسبة المعدل</a>
+        <div class="theme-toggle-container">
+            <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn">🌙 وضع ليلي</button>
         </div>
+        <h1>بوابة القسم العام الرقمية</h1>
+        <p>كلية هندسة النفط والغاز والطاقات المتجددة - الزاوية</p>
     </header>
 
-    <div class="content-area">
-        <h2>الوصول السريع للمعلومات الأكاديمية</h2>
-        <p>منصة مخصصة لطلاب القسم العام لمتابعة المسيرة الدراسية، عرض جداول المحاضرات، وحساب المعدلات بدقة.</p>
+    <div class="dashboard-grid">
+        <a href="subjects.html" class="card">
+            <div class="card-icon">🌳</div>
+            <h3>دليل المواد</h3>
+            <p>خريطة تفاعلية للمواد الدراسية وتوزيع الساعات المعتمدة.</p>
+        </a>
+
+        <a href="table.html" class="card">
+            <div class="card-icon">📊</div>
+            <h3>الجدول الدراسي</h3>
+            <p>عرض جداول المحاضرات الأسبوعية والقاعات الدراسية.</p>
+        </a>
+
+        <a href="gpa.html" class="card">
+            <div class="card-icon">🧮</div>
+            <h3>حاسبة المعدل</h3>
+            <p>احسب معدلك التراكمي بدقة، جرب نظام الإحلال، وخطط لأهدافك.</p>
+        </a>
     </div>
 
     <footer>
-        <span class="counter-label">إحصائيات زيارة البوابة</span>
-        <div class="counter-oval" id="visitor-count">
-            00000
-        </div>
-        <p class="copyright">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
+        <span style="display:block; margin-bottom:20px; font-weight:700; color:var(--text-muted);">إحصائيات زيارة البوابة</span>
+        <div class="counter-oval" id="visitor-count">00000</div>
+        <p style="margin-top:35px; font-size:0.9rem; color:#bdc3c7;">تم التطوير بواسطة القسم العام &copy; 2026</p>
     </footer>
 
     <script>
-        // برمجة العداد لضمان عدم الاختفاء والعمل المستقر
-        function updateCounter() {
-            // جلب القيمة المخزنة في متصفح المستخدم
-            let count = localStorage.getItem('visitCount_Main');
+        // دالة تبديل الوضع
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
-            if (!count) {
-                // إذا كانت أول مرة، نبدأ برقم افتراضي (مثلاً 124) لإعطاء الموقع هيبة
-                count = 124;
-            } else {
-                count = parseInt(count) + 1;
-            }
-
-            // حفظ القيمة الجديدة
-            localStorage.setItem('visitCount_Main', count);
-            
-            // عرض الرقم وتنسيقه ليحتوي على 5 خانات دائماً
-            document.getElementById('visitor-count').innerText = count.toString().padStart(5, '0');
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+            document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
         }
 
-        // تفعيل العداد عند تحميل الصفحة بالكامل
-        window.onload = updateCounter;
+        // دالة العداد وضبط الثيم عند التحميل
+        window.onload = function() {
+            // 1. تحديث العداد
+            let count = localStorage.getItem('visitCount_Main') || 124;
+            count = parseInt(count) + 1;
+            localStorage.setItem('visitCount_Main', count);
+            document.getElementById('visitor-count').innerText = count.toString().padStart(5, '0');
+
+            // 2. تطبيق الثيم المحفوظ
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
+        }
     </script>
 
 </body>

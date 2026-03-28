@@ -1,0 +1,86 @@
+/* 1. الألوان الافتراضية (الوضع الفاتح - Light Mode) */
+:root {
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-color: #2c3e50;
+    --border-color: #e2e8f0;
+    --secondary: #f39c12; /* اللون البرتقالي المميز لجامعة الزاوية */
+    --primary-dark: #1a252f;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --transition: 0.3s ease;
+}
+
+/* 2. ألوان الوضع الليلي (Dark Mode) */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --border-color: #333333;
+    --shadow: 0 10px 40px rgba(0,0,0,0.4);
+    --primary-dark: #000000;
+}
+
+/* 3. التنسيقات العامة للجسم */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color var(--transition), color var(--transition);
+    line-height: 1.6;
+}
+
+/* 4. تنسيق الحاويات والبطاقات لتدعم الوضعين تلقائياً */
+.container, .card, .sem-section, .modal-content {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    box-shadow: var(--shadow);
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+/* 5. الجداول (مهمة جداً للحاسبة والشجرة) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: var(--border-color);
+    color: var(--text-color);
+    padding: 12px;
+}
+
+td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px;
+}
+
+/* 6. المدخلات والقوائم (Inputs & Selects) */
+input, select, button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px;
+    transition: var(--transition);
+}
+
+input:focus, select:focus {
+    border-color: var(--secondary);
+    outline: none;
+}
+
+/* 7. شريط التنقل (Navbar) */
+.nav-bar {
+    background-color: var(--card-bg);
+    border-bottom: 2px solid var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
