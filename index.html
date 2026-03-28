@@ -6,7 +6,7 @@
     <title>بوابة الكلية - الرئيسية</title>
     
     <style>
-        /* 1. التنسيقات الأساسية والجسم */
+        /* التنسيقات العامة */
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             background-color: #f0f2f5; 
@@ -19,7 +19,7 @@
             color: #2c3e50;
         }
 
-        /* 2. رأس الصفحة (Header) */
+        /* رأس الصفحة (Header) */
         header { 
             background: #2c3e50; 
             color: white; 
@@ -30,7 +30,7 @@
         header h1 { margin: 0; font-size: 2.2rem; font-weight: bold; }
         header p { opacity: 0.8; margin-top: 10px; font-size: 1.1rem; }
 
-        /* 3. حاوية الأزرار والتنقل */
+        /* حاوية الأزرار والتنقل */
         .nav-container { 
             margin-top: 30px; 
             display: flex; 
@@ -53,25 +53,22 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* ألوان الأزرار المخصصة */
-        .btn-map   { background-color: #3498db; } /* أزرق */
-        .btn-table { background-color: #27ae60; } /* أخضر */
-        .btn-gpa   { background-color: #f39c12; } /* برتقالي */
+        /* ألوان الأزرار */
+        .btn-map   { background-color: #3498db; }
+        .btn-table { background-color: #27ae60; }
+        .btn-gpa   { background-color: #f39c12; }
 
         .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); opacity: 0.9; }
 
-        /* 4. منطقة المحتوى النصي */
+        /* منطقة المحتوى */
         .content-area {
             padding: 60px 20px;
             max-width: 800px;
             margin: 0 auto;
-            flex-grow: 1; /* يدفع التذييل للأسفل */
+            flex-grow: 1;
         }
 
-        .content-area h2 { color: #34495e; margin-bottom: 20px; }
-        .content-area p { line-height: 1.6; color: #7f8c8d; font-size: 1.1rem; }
-
-        /* 5. تذييل الصفحة والعداد البيضاوي */
+        /* تذييل الصفحة وتنسيق العداد البيضاوي */
         footer {
             background-color: #ffffff;
             padding: 40px 20px;
@@ -81,27 +78,23 @@
         .counter-label {
             display: block;
             margin-bottom: 15px;
-            color: #95a5a6;
+            color: #7f8c8d;
             font-weight: bold;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-size: 1rem;
         }
 
         .counter-oval {
             display: inline-block;
-            background-color: #2c3e50; /* إطار العداد الغامق */
-            padding: 15px 35px;
-            border-radius: 50px; /* الشكل البيضاوي */
+            background-color: #2c3e50; /* الإطار الغامق */
+            padding: 12px 30px;
+            border-radius: 50px; /* شكل بيضاوي */
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            border: 2px solid #f39c12; /* تحديد برتقالي خفيف للتناسق */
         }
 
-        .counter-oval:hover { transform: scale(1.05); }
-
-        .copyright {
-            margin-top: 25px;
-            font-size: 0.8rem;
-            color: #bdc3c7;
+        .counter-img {
+            vertical-align: middle;
+            filter: brightness(1.1); /* تحسين وضوح الأرقام */
         }
     </style>
 </head>
@@ -126,11 +119,11 @@
     <footer>
         <span class="counter-label">إحصائيات زيارة البوابة</span>
         <div class="counter-oval">
-            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwasemagha.github.io%2Fgeneral-department&count_bg=%23F39C12&title_bg=%232C3E50&icon=&icon_color=%23E7E7E7&title=%D8%A7%D9%84%D8%B2%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA&edge_flat=false" 
+            <img src="https://counter.us.com/gh/wasemagha/general-department/counter.png" 
                  alt="Visitor Counter" 
-                 style="vertical-align: middle;">
+                 class="counter-img">
         </div>
-        <p class="copyright">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #bdc3c7;">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
     </footer>
 
 </body>
