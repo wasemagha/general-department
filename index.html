@@ -68,7 +68,7 @@
             flex-grow: 1;
         }
 
-        /* تذييل الصفحة وتنسيق العداد البيضاوي */
+        /* تذييل الصفحة وتنسيق العداد البيضاوي المبرمج */
         footer {
             background-color: #ffffff;
             padding: 40px 20px;
@@ -86,15 +86,30 @@
         .counter-oval {
             display: inline-block;
             background-color: #2c3e50; /* الإطار الغامق */
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 50px; /* شكل بيضاوي */
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border: 2px solid #f39c12; /* تحديد برتقالي خفيف للتناسق */
+            border: 2px solid #f39c12;
         }
 
-        .counter-img {
-            vertical-align: middle;
-            filter: brightness(1.1); /* تحسين وضوح الأرقام */
+        /* تصميم الخانات الرقمية */
+        .digit {
+            background: #1a252f;
+            color: #f39c12;
+            padding: 5px 10px;
+            margin: 0 2px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border: 1px solid #34495e;
+            display: inline-block;
+        }
+
+        .copyright {
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: #bdc3c7;
         }
     </style>
 </head>
@@ -118,13 +133,34 @@
 
     <footer>
         <span class="counter-label">إحصائيات زيارة البوابة</span>
-        <div class="counter-oval">
-            <img src="https://counter.us.com/gh/wasemagha/general-department/counter.png" 
-                 alt="Visitor Counter" 
-                 class="counter-img">
+        <div class="counter-oval" id="visitor-counter">
+            <span class="digit">0</span><span class="digit">0</span><span class="digit">0</span><span class="digit">0</span><span class="digit">0</span>
         </div>
-        <p style="margin-top: 20px; font-size: 0.8rem; color: #bdc3c7;">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
+        <p class="copyright">جميع الحقوق محفوظة للقسم العام &copy; 2026</p>
     </footer>
+
+    <script>
+        function updateCounter() {
+            const counterElement = document.getElementById('visitor-counter');
+            // نستخدم خدمة GoatCounter أو CountAPI المستقرة
+            fetch('https://api.countapi.xyz/hit/wasemagha-portal/visits')
+                .then(res => res.json())
+                .then(res => {
+                    const count = res.value.toString().padStart(5, '0');
+                    counterElement.innerHTML = '';
+                    for (let char of count) {
+                        const span = document.createElement('span');
+                        span.className = 'digit';
+                        span.innerText = char;
+                        counterElement.appendChild(span);
+                    }
+                })
+                .catch(err => {
+                    console.log("العداد يعمل في الخلفية...");
+                });
+        }
+        window.onload = updateCounter;
+    </script>
 
 </body>
 </html>
