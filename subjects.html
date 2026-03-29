@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=1400, initial-scale=0.4, maximum-scale=2.0, user-scalable=yes"> 
     <title>المخطط الأكاديمي الكامل | بوابة القسم العام</title>
     <style>
         :root {
@@ -28,9 +28,11 @@
             background-color: var(--bg); 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             margin: 0; padding: 0; 
-            display: flex; flex-direction: column; align-items: center;
             color: var(--primary);
             transition: 0.3s;
+            /* السماح بالتمرير في كل الاتجاهات للموبايل */
+            overflow-x: auto;
+            min-width: 1400px;
         }
         
         .nav-bar { 
@@ -43,17 +45,13 @@
         .home-btn { 
             text-decoration: none; color: #2c3e50; font-weight: bold; 
             display: flex; align-items: center; gap: 8px; font-size: 16px; 
-            background: var(--secondary); padding: 8px 18px; border-radius: 10px; transition: 0.3s;
+            background: var(--secondary); padding: 8px 18px; border-radius: 10px;
         }
 
         .theme-btn {
-            background: var(--primary);
-            color: var(--white);
-            border: 2px solid var(--secondary);
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
+            background: var(--primary); color: var(--white);
+            border: 2px solid var(--secondary); padding: 8px 15px;
+            border-radius: 10px; cursor: pointer; font-weight: bold;
         }
 
         header { 
@@ -61,14 +59,13 @@
             color: white; padding: 50px 0; text-align: center; border-bottom: 5px solid var(--secondary);
         }
 
-        /* حاوية المخطط */
         .container { 
             position: relative; 
             width: 1400px; 
             height: 2300px; 
-            margin-top: 30px; 
-            flex-shrink: 0; 
-            transition: 0.3s; 
+            margin: 30px auto; 
+            flex-shrink: 0;
+            transition: 0.3s;
         }
 
         .card { 
@@ -77,9 +74,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             border: 1px solid var(--card-border-default);
             position: absolute; z-index: 10; cursor: pointer; transition: all 0.3s ease;
-            overflow: hidden;
-            user-select: none;
-            -webkit-user-select: none;
+            overflow: hidden; user-select: none; -webkit-user-select: none;
+            touch-action: manipulation;
         }
 
         .status-icon {
@@ -90,7 +86,6 @@
         }
 
         .container.highlight-mode .card { opacity: 0.15; filter: grayscale(1); }
-        
         .card.active-target { opacity: 1 !important; filter: none !important; border: 3px solid var(--secondary) !important; transform: scale(1.1); z-index: 100; }
         .card.is-prereq { opacity: 1 !important; filter: none !important; border: 3px solid #27ae60 !important; }
         .card.is-prereq .status-icon.check { opacity: 0.7; color: #27ae60; }
@@ -101,36 +96,9 @@
         .code { font-size: 11px; color: var(--secondary); font-weight: bold; margin-bottom: 5px; }
         .name { font-size: 14px; color: var(--primary); font-weight: 600; text-align: center; padding: 0 5px; }
         
-        /* الخطوط */
         .line-h { position: absolute; height: 2px; background: var(--line-color); z-index: 1; }
         .line-v { position: absolute; width: 2px; background: var(--line-color); z-index: 1; }
         svg.connectors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
-
-        /* تعديلات الموبايل */
-        @media (max-width: 1000px) {
-            body { overflow-x: hidden; }
-            .container { 
-                width: 95%; 
-                height: auto; 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                gap: 20px;
-                padding-bottom: 50px;
-            }
-            .card { 
-                position: relative !important; 
-                top: auto !important; 
-                right: auto !important; 
-                left: auto !important;
-                width: 90% !important;
-                max-width: 350px;
-                height: 80px;
-            }
-            .line-h, .line-v, svg.connectors { display: none; } /* إخفاء الخطوط في الموبايل لمنع التداخل */
-            header { padding: 30px 10px; }
-            header h1 { font-size: 1.5rem; }
-        }
 
         /* المودال */
         .modal {
@@ -162,7 +130,7 @@
 
     <header>
         <h1>المخطط الأكاديمي الشامل</h1>
-        <p>ضغطة سريعة للتفاصيل | ضغطة مطولة للمسار</p>
+        <p>استخدم إصبعين للتصغير/التكبير | ضغطة مطولة للمسار</p>
     </header>
 
     <div class="container" id="main-container">
@@ -195,7 +163,7 @@
         <div class="card" style="top: 650px; right: 50px;" data-name="استاتيكا" data-code="GE121" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE121</span><span class="name">استاتيكا</span></div>
         <div class="line-h" style="top: 700px; right: 220px; width: 50px;"></div>
         <div class="card" style="top: 650px; right: 270px;" data-name="ديناميكا" data-code="GE222" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE222</span><span class="name">ديناميكا</span></div>
-
+        
         <div class="card" style="top: 850px; right: 50px;" data-name="كيمياء عامة" data-code="GS115" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS115</span><span class="name">كيمياء عامة</span></div>
         <div class="line-h" style="top: 900px; right: 220px; width: 50px;"></div>
         <div class="card" style="top: 850px; right: 270px;" data-name="كيمياء معمل" data-code="L115-GS" data-units="1 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">L115-GS</span><span class="name">كيمياء معمل</span></div>
@@ -239,7 +207,6 @@
     </footer>
 
     <script>
-        // كود الـ JS الخاص بك كما هو لضمان استمرارية المنطق
         const dependencies = {
             'رياضة 1': { req: [], next: ['رياضة 2'] },
             'رياضة 2': { req: ['رياضة 1'], next: ['رياضة 3', 'برمجة حاسوب', 'الإحصاء والاحتمالات'] },
@@ -283,14 +250,13 @@
             });
 
             card.addEventListener('mouseup', () => clearTimeout(pressTimer));
-            card.addEventListener('mouseleave', () => clearTimeout(pressTimer));
             card.addEventListener('touchstart', (e) => {
                 isLongPress = false;
                 pressTimer = setTimeout(() => {
                     isLongPress = true;
                     activateHighlight(name);
                 }, LONG_PRESS_TIME);
-            });
+            }, {passive: true});
             card.addEventListener('touchend', () => clearTimeout(pressTimer));
 
             card.addEventListener('click', () => {
@@ -306,9 +272,8 @@
 
         function activateHighlight(name) {
             const container = document.getElementById('main-container');
-            const cards = document.querySelectorAll('.card');
             container.classList.add('highlight-mode');
-            cards.forEach(card => {
+            document.querySelectorAll('.card').forEach(card => {
                 card.classList.remove('active-target', 'is-prereq', 'is-next');
                 const cardName = card.getAttribute('data-name');
                 if (cardName === name) card.classList.add('active-target');
