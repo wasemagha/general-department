@@ -41,11 +41,15 @@
             position: sticky; top: 0; z-index: 100; box-sizing: border-box;
         }
 
-        .home-btn { 
+        .nav-right { display: flex; gap: 10px; align-items: center; }
+
+        .home-btn, .pdf-btn { 
             text-decoration: none; color: #2c3e50; font-weight: bold; 
-            display: flex; align-items: center; gap: 8px; font-size: 16px; 
-            background: var(--secondary); padding: 8px 18px; border-radius: 10px;
+            display: flex; align-items: center; gap: 8px; font-size: 14px; 
+            background: var(--secondary); padding: 8px 15px; border-radius: 10px;
+            border: none; cursor: pointer;
         }
+        .pdf-btn { background: #e74c3c; color: white; }
 
         .theme-btn {
             background: var(--primary); color: var(--white);
@@ -84,6 +88,9 @@
             pointer-events: none; z-index: 5;
         }
 
+        .card.is-completed .status-icon.check { opacity: 0.2; color: #27ae60; display: block; }
+        .card.is-completed { border: 2px solid #27ae60 !important; }
+
         .container.highlight-mode .card { opacity: 0.15; filter: grayscale(1); }
         .card.active-target { opacity: 1 !important; filter: none !important; border: 3px solid var(--secondary) !important; transform: scale(1.1); z-index: 100; }
         .card.is-prereq { opacity: 1 !important; filter: none !important; border: 3px solid #27ae60 !important; }
@@ -97,9 +104,8 @@
         
         .line-h { position: absolute; height: 2px; background: var(--line-color); z-index: 1; }
         .line-v { position: absolute; width: 2px; background: var(--line-color); z-index: 1; }
-        svg.connectors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+        svg.connectors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; overflow: visible; }
 
-        /* --- التحسين الجوهري للنافذة المنبثقة (Modal) --- */
         .modal {
             display: none; position: fixed; z-index: 3000; left: 0; top: 0;
             width: 100%; height: 100%; 
@@ -109,30 +115,26 @@
         .modal-content {
             background-color: var(--white); 
             margin: 5% auto; 
-            padding: 60px;
-            border-radius: 40px; 
-            width: 900px; /* عرض كبير ليكون واضحاً في وضع الـ 0.4 */
-            max-width: 95%; 
+            padding: 50px;
+            border-radius: 30px; 
+            width: 700px;
+            max-width: 90%; 
             text-align: right;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5); 
-            border-top: 20px solid var(--secondary);
+            border-top: 15px solid var(--secondary);
             position: relative; 
             color: var(--primary);
-            font-size: 35px; /* خط كبير جداً للقراءة السهلة */
+            font-size: 28px;
         }
-        .modal-content h2 { 
-            font-size: 60px; 
-            margin-top: 0; 
-            color: var(--primary);
+        .modal-content h2 { font-size: 45px; margin-top: 0; }
+        .close-btn { position: absolute; top: 20px; left: 30px; font-size: 60px; cursor: pointer; color: #e74c3c; }
+        
+        .action-btn {
+            background: #27ae60; color: white; border: none;
+            padding: 20px; border-radius: 15px; font-size: 24px;
+            cursor: pointer; width: 100%; margin-top: 30px; font-weight: bold;
         }
-        .close-btn { 
-            position: absolute; top: 30px; left: 40px; 
-            font-size: 80px; cursor: pointer; color: #e74c3c; 
-            line-height: 1;
-        }
-        .modal-content p { margin: 30px 0; }
-        .modal-content hr { border: 0; border-top: 3px solid #eee; margin: 30px 0; }
-        /* ----------------------------------------------- */
+        .action-btn.remove { background: #e74c3c; }
 
         footer { width: 100%; background: var(--white); padding: 40px 0; border-top: 1px solid var(--card-border-default); text-align: center; }
         .counter-oval {
@@ -140,18 +142,72 @@
             padding: 10px 30px; border-radius: 100px; border: 2px solid var(--secondary);
             color: var(--secondary); font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: bold; direction: ltr;
         }
+
+        /* --- إعدادات الطباعة المحدثة لإظهار الخطوط والـ SVG --- */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body { 
+                min-width: 1400px !important; 
+                background: white !important; 
+                direction: rtl !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .nav-bar, .theme-btn, .pdf-btn, .home-btn, header p, footer, .modal { 
+                display: none !important; 
+            }
+            header { 
+                padding: 15px 0 !important; 
+                background: #1a252f !important; 
+                width: 1400px !important;
+            }
+            .container { 
+                margin: 0 !important;
+                width: 1400px !important;
+                position: relative !important;
+                zoom: 0.63; 
+                transform: none !important;
+            }
+            /* إجبار المتصفح على رسم الخطوط اليدوية والـ SVG */
+            .line-h, .line-v { 
+                background: #aaa !important; 
+                display: block !important;
+                visibility: visible !important;
+            }
+            svg.connectors { 
+                display: block !important; 
+                visibility: visible !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            svg.connectors path, svg.connectors line {
+                stroke: #aaa !important;
+                stroke-width: 2px !important;
+            }
+            .card { 
+                border: 1px solid #aaa !important; 
+                box-shadow: none !important; 
+                background-color: white !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="nav-bar">
-        <a href="index.html" class="home-btn">🏠 الرئيسية</a>
+        <div class="nav-right">
+            <a href="index.html" class="home-btn">🏠 الرئيسية</a>
+            <button class="pdf-btn" onclick="window.print()">📄 تحميل PDF</button>
+        </div>
         <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 وضع ليلي</button>
     </div>
 
     <header>
         <h1>المخطط الأكاديمي الشامل</h1>
-        <p>استخدم إصبعين للتصغير/التكبير | ضغطة مطولة للمسار</p>
+        <p>ضغطة واحدة للتفاصيل | ضغطة مطولة للمسار والمتطلبات</p>
     </header>
 
     <div class="container" id="main-container">
@@ -169,7 +225,7 @@
 
         <div class="card" style="top: 250px; right: 50px;" data-name="رياضة 1" data-code="GS101" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS101</span><span class="name">رياضة 1</span></div>
         <div class="line-h" style="top: 300px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 270px; border: 2.5px solid #3498db !important;" data-name="رياضة 2" data-code="GS102" data-units="4 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS102</span><span class="name">رياضة 2</span></div>
+        <div class="card" style="top: 250px; right: 270px;" data-name="رياضة 2" data-code="GS102" data-units="4 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS102</span><span class="name">رياضة 2</span></div>
         <div class="line-v" style="top: 150px; right: 354px; height: 100px;"></div>
         <div class="card" style="top: 50px; right: 270px;" data-name="برمجة حاسوب" data-code="GS200" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS200</span><span class="name">برمجة حاسوب</span></div>
         <div class="line-v" style="top: 350px; right: 354px; height: 100px;"></div>
@@ -179,7 +235,7 @@
         <div class="line-h" style="top: 300px; right: 660px; width: 50px;"></div>
         <div class="card" style="top: 250px; right: 710px;" data-name="رياضة 4" data-code="GS204" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS204</span><span class="name">رياضة 4</span></div>
         <div class="line-h" style="top: 300px; right: 880px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 930px; border: 2.5px solid #e056fd !important;" data-name="التحليل العددي" data-code="GS309" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS309</span><span class="name">التحليل العددي</span></div>
+        <div class="card" style="top: 250px; right: 930px;" data-name="التحليل العددي" data-code="GS309" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS309</span><span class="name">التحليل العددي</span></div>
 
         <div class="card" style="top: 650px; right: 50px;" data-name="استاتيكا" data-code="GE121" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE121</span><span class="name">استاتيكا</span></div>
         <div class="line-h" style="top: 700px; right: 220px; width: 50px;"></div>
@@ -191,7 +247,7 @@
 
         <div class="card" style="top: 1250px; right: 50px;" data-name="فيزياء 1" data-code="GS111" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS111</span><span class="name">فيزياء 1</span></div>
         <div class="line-h" style="top: 1300px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 1250px; right: 270px; border: 2.5px solid #3498db !important;" data-name="فيزياء 2" data-code="GS112" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS112</span><span class="name">فيزياء 2</span></div>
+        <div class="card" style="top: 1250px; right: 270px;" data-name="فيزياء 2" data-code="GS112" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS112</span><span class="name">فيزياء 2</span></div>
         <div class="line-v" style="top: 1150px; right: 354px; height: 100px;"></div>
         <div class="card" style="top: 1050px; right: 270px;" data-name="أسس هندسة كهربائية" data-code="GE280" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE280</span><span class="name">أسس هندسة كهربائية</span></div>
         <div class="line-h" style="top: 1300px; right: 440px; width: 50px;"></div>
@@ -200,14 +256,14 @@
 
         <div class="card" style="top: 1650px; right: 50px;" data-name="لغة إنجليزية 1" data-code="GH141" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH141</span><span class="name">لغة إنجليزية 1</span></div>
         <div class="line-h" style="top: 1700px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 1650px; right: 270px; border: 2.5px solid #3498db !important;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div>
+        <div class="card" style="top: 1650px; right: 270px;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div>
         <div class="line-h" style="top: 1700px; right: 440px; width: 50px;"></div>
         <div class="card" style="top: 1650px; right: 490px;" data-name="لغة إنجليزية 3" data-code="GH241" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH241</span><span class="name">لغة إنجليزية 3</span></div>
-        <div class="card" style="top: 1825px; right: 490px; border: 2.5px solid #ff00ff !important;" data-name="كتابة تقارير" data-code="GH450" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
+        <div class="card" style="top: 1825px; right: 490px;" data-name="كتابة تقارير" data-code="GH450" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
 
         <div class="card" style="top: 2050px; right: 50px;" data-name="لغة عربية 1" data-code="GH150" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH150</span><span class="name">لغة عربية 1</span></div>
         <div class="line-h" style="top: 2100px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 2050px; right: 270px; border: 2.5px solid #3498db !important;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div>
+        <div class="card" style="top: 2050px; right: 270px;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div>
         <div class="line-h" style="top: 2100px; right: 440px; width: 50px;"></div>
         <div class="card" style="top: 2050px; right: 490px;" data-name="ثقافة وطنية" data-code="GH299" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH299</span><span class="name">ثقافة وطنية</span></div>
     </div>
@@ -217,11 +273,9 @@
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2 id="m-title"></h2>
             <hr>
-            <p><strong>🔹 الرمز الأكاديمي:</strong> <span id="m-code" style="color: var(--secondary); font-weight: bold;"></span></p>
-            <p><strong>🔹 عدد الوحدات:</strong> <span id="m-units"></span></p>
-            <p style="font-size: 24px; color: var(--text-muted); border-top: 1px solid #eee; padding-top: 20px;">
-                يمكنك رؤية المتطلبات بالضغط المطول على الكرت في المخطط.
-            </p>
+            <p><strong>🔹 الرمز:</strong> <span id="m-code" style="color: var(--secondary); font-weight: bold;"></span></p>
+            <p><strong>🔹 الوحدات:</strong> <span id="m-units"></span></p>
+            <button id="modal-action-btn" class="action-btn" onclick="toggleCompletion()">تحديد كمادة مكتملة</button>
         </div>
     </div>
 
@@ -231,6 +285,7 @@
     </footer>
 
     <script>
+        // ... (نفس السكربت السابق بدون تغيير)
         const dependencies = {
             'رياضة 1': { req: [], next: ['رياضة 2'] },
             'رياضة 2': { req: ['رياضة 1'], next: ['رياضة 3', 'برمجة حاسوب', 'الإحصاء والاحتمالات'] },
@@ -258,6 +313,7 @@
 
         let pressTimer;
         let isLongPress = false;
+        let activeSubject = "";
         const LONG_PRESS_TIME = 500;
 
         document.querySelectorAll('.card').forEach(card => {
@@ -274,7 +330,7 @@
             });
 
             card.addEventListener('mouseup', () => clearTimeout(pressTimer));
-            card.addEventListener('touchstart', (e) => {
+            card.addEventListener('touchstart', () => {
                 isLongPress = false;
                 pressTimer = setTimeout(() => {
                     isLongPress = true;
@@ -314,31 +370,63 @@
         }
 
         function showDetails(name, code, units) {
+            activeSubject = name;
             document.getElementById('m-title').innerText = name;
             document.getElementById('m-code').innerText = code;
             document.getElementById('m-units').innerText = units;
+            
+            const completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
+            const btn = document.getElementById('modal-action-btn');
+            if(completed.includes(name)) {
+                btn.innerText = "إلغاء الإكمال";
+                btn.classList.add('remove');
+            } else {
+                btn.innerText = "تحديد كمادة مكتملة";
+                btn.classList.remove('remove');
+            }
             document.getElementById('myModal').style.display = "block";
+        }
+
+        function toggleCompletion() {
+            let completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
+            const card = document.querySelector(`.card[data-name="${activeSubject}"]`);
+            
+            if(completed.includes(activeSubject)) {
+                completed = completed.filter(s => s !== activeSubject);
+                card.classList.remove('is-completed');
+            } else {
+                completed.push(activeSubject);
+                card.classList.add('is-completed');
+            }
+            localStorage.setItem('done_subs', JSON.stringify(completed));
+            closeModal();
         }
 
         function closeModal() {
             document.getElementById('myModal').style.display = "none";
-            closeHighlight();
         }
 
         function toggleTheme() {
             const body = document.documentElement;
-            const currentTheme = body.getAttribute('data-theme');
-            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const targetTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             body.setAttribute('data-theme', targetTheme);
             localStorage.setItem('theme', targetTheme);
             document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
         }
 
-        window.onclick = function(event) { if (event.target == document.getElementById('myModal')) closeModal(); }
-        window.onload = function() {
+        window.onclick = (e) => { if (e.target == document.getElementById('myModal')) closeModal(); }
+
+        window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
+            
+            const completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
+            completed.forEach(s => {
+                const card = document.querySelector(`.card[data-name="${s}"]`);
+                if(card) card.classList.add('is-completed');
+            });
+
             let count = localStorage.getItem('visitCount_Subjects') || 412;
             count = parseInt(count) + 1;
             localStorage.setItem('visitCount_Subjects', count);

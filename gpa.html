@@ -13,17 +13,9 @@
             --panel-bg: #f8fafc; --table-head: #f1f5f9;
         }
 
-        /* تنسيقات الوضع المظلم عند التفعيل */
         [data-theme="dark"] {
-            --bg: #121212;
-            --white: #1e1e1e;
-            --primary: #ecf0f1;
-            --text-color: #e0e0e0;
-            --card-border: #333;
-            --input-bg: #2d2d2d;
-            --panel-bg: #1a1a1a;
-            --table-head: #252525;
-            --muted: #bdc3c7;
+            --bg: #121212; --white: #1e1e1e; --primary: #ecf0f1; --text-color: #e0e0e0;
+            --card-border: #333; --input-bg: #2d2d2d; --panel-bg: #1a1a1a; --table-head: #252525; --muted: #bdc3c7;
         }
 
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 40px; color: var(--text-color); transition: 0.3s; }
@@ -32,7 +24,6 @@
         header { border-bottom: 3px solid var(--secondary); padding-bottom: 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
         .back-link { text-decoration: none; color: var(--primary); font-weight: bold; background: #ebedef; padding: 12px 25px; border-radius: 15px; }
 
-        /* تنسيق الأزرار في الهيدر */
         .header-btns { display: flex; gap: 10px; align-items: center; }
         .theme-btn { padding: 12px 20px; background: var(--primary); color: var(--white); border: 2px solid var(--secondary); border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
 
@@ -122,17 +113,15 @@
     <div class="floating-results no-print">
         <div style="text-align: center;"><small style="opacity:0.7">التراكمي العام</small><br><b id="f-gpa" style="color:var(--secondary); font-size:1.6rem;">0.00%</b></div>
         <div style="text-align: center;"><small style="opacity:0.7">التقدير العام</small><br><b id="f-grade">-</b></div>
-        <div style="text-align: center;"><small style="opacity:0.7">إجمالي الوحدات</small><br><b id="f-units">0</b></div>
+        <div style="text-align: center;"><small style="opacity:0.7">إجمالي الوحدات المنجزة</small><br><b id="f-units">0</b></div>
     </div>
 </div>
 
 <script>
-    // نظام تبديل الثيم
     function toggleTheme() {
         const body = document.documentElement;
         const currentTheme = body.getAttribute('data-theme');
         const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
         body.setAttribute('data-theme', targetTheme);
         localStorage.setItem('theme', targetTheme);
         document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
@@ -174,12 +163,15 @@
     }
 
     function initApp() {
-        const count = document.getElementById('semCount').value;
+        const count = parseInt(document.getElementById('semCount').value);
         const container = document.getElementById('semestersList');
-        container.innerHTML = '';
-        for (let i = 1; i <= count; i++) {
-            container.innerHTML += `
-                <div class="sem-section">
+        const currentSections = container.querySelectorAll('.sem-section').length;
+
+        if (count > currentSections) {
+            for (let i = currentSections + 1; i <= count; i++) {
+                const div = document.createElement('div');
+                div.className = 'sem-section';
+                div.innerHTML = `
                     <div class="sem-head">
                         <span>الفصل الدراسي ${i}</span>
                         <div style="display:flex; gap:20px; align-items:center;">
@@ -197,8 +189,14 @@
                         <tbody id="tbody-${i}"></tbody>
                     </table>
                     <button class="no-print" style="margin:15px; cursor:pointer; padding:8px 15px; border-radius:8px; background:var(--primary); color:var(--white); border:none;" onclick="addRow(${i})">+ إضافة مادة من الشجرة</button>
-                </div>`;
-            addRow(i);
+                `;
+                container.appendChild(div);
+                addRow(i);
+            }
+        } else if (count < currentSections) {
+            for (let i = currentSections; i > count; i--) {
+                container.lastElementChild.remove();
+            }
         }
         calculate();
     }
@@ -225,11 +223,11 @@
     }
 
     function calculate() {
-        let tp = 0, tu = 0;
+        let totalPoints = 0, gpaUnits = 0, earnedUnits = 0;
         const target = parseFloat(document.getElementById('targetGPA').value) || 0;
 
         document.querySelectorAll('.sem-section').forEach((sec, idx) => {
-            let sp = 0, su = 0;
+            let semP = 0, semH = 0;
             sec.querySelectorAll('tbody tr').forEach(row => {
                 const h = parseFloat(row.querySelector('.h-val').value) || 0;
                 const g = parseFloat(row.querySelector('.g-val').value) || 0;
@@ -241,24 +239,29 @@
                 badge.className = 'grade-badge ' + mGrade.class;
 
                 if (h > 0) {
-                    if (!isR) { tp += (g * h); tu += h; }
-                    sp += (g * h); su += h;
+                    totalPoints += (g * h);
+                    gpaUnits += h;
+                    if (g >= 50 && !isR) earnedUnits += h;
+                    semP += (g * h); semH += h;
                 }
             });
-            const sAvg = su > 0 ? (sp / su).toFixed(2) : "0.00";
-            document.getElementById(`sem-avg-${idx+1}`).innerText = sAvg + "%";
-            const sGrade = getGradeInfo(parseFloat(sAvg));
-            const sBadge = document.getElementById(`sem-grade-${idx+1}`);
-            sBadge.innerText = sGrade.text;
-            sBadge.className = 'grade-badge ' + sGrade.class;
+            const sAvg = semH > 0 ? (semP / semH).toFixed(2) : "0.00";
+            const currentIdx = idx + 1;
+            if(document.getElementById(`sem-avg-${currentIdx}`)) {
+                document.getElementById(`sem-avg-${currentIdx}`).innerText = sAvg + "%";
+                const sGrade = getGradeInfo(parseFloat(sAvg));
+                const sBadge = document.getElementById(`sem-grade-${currentIdx}`);
+                sBadge.innerText = sGrade.text;
+                sBadge.className = 'grade-badge ' + sGrade.class;
+            }
         });
 
-        const gpa = tu > 0 ? (tp / tu).toFixed(2) : "0.00";
+        const gpa = gpaUnits > 0 ? (totalPoints / gpaUnits).toFixed(2) : "0.00";
         const gInfo = getGradeInfo(parseFloat(gpa));
 
         ['f', 'p'].forEach(p => {
             document.getElementById(`${p}-gpa`).innerText = gpa + "%";
-            document.getElementById(`${p}-units`).innerText = tu;
+            document.getElementById(`${p}-units`).innerText = earnedUnits;
             document.getElementById(`${p}-grade`).innerText = gInfo.text;
         });
 
@@ -270,7 +273,6 @@
     }
 
     window.onload = function() {
-        // استعادة الثيم المفضل
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
