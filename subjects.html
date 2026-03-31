@@ -2,403 +2,102 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1400, initial-scale=0.4, maximum-scale=2.0, user-scalable=yes"> 
+    <meta name="viewport" content="width=1400, initial-scale=0.4, maximum-scale=2.0, user-scalable=yes">
     <title>المخطط الأكاديمي الكامل | بوابة القسم العام</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #f39c12;
-            --bg: #f8f9fb;
-            --white: #ffffff;
-            --text-muted: #7f8c8d;
-            --line-color: #cbd5e0;
-            --card-border-default: #edf2f7;
-        }
-
-        [data-theme="dark"] {
-            --bg: #121212;
-            --white: #1e1e1e;
-            --primary: #ecf0f1;
-            --text-muted: #bdc3c7;
-            --line-color: #444;
-            --card-border-default: #333;
-        }
-
-        body { 
-            background-color: var(--bg); 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            margin: 0; padding: 0; 
-            color: var(--primary);
-            transition: 0.3s;
-            overflow-x: auto;
-            min-width: 1400px;
-        }
-        
-        .nav-bar { 
-            width: 100%; background: var(--white); 
-            padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 100; box-sizing: border-box;
-        }
-
+        :root { --primary: #2c3e50; --secondary: #f39c12; --bg: #f8f9fb; --white: #ffffff; --text-muted: #7f8c8d; --line-color: #cbd5e0; --card-border-default: #edf2f7; }
+        [data-theme="dark"] { --bg: #121212; --white: #1e1e1e; --primary: #ecf0f1; --text-muted: #bdc3c7; --line-color: #444; --card-border-default: #333; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; color: var(--primary); transition: 0.3s; overflow-x: auto; min-width: 1400px; }
+        .nav-bar { width: 100%; background: var(--white); padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-sizing: border-box; }
         .nav-right { display: flex; gap: 10px; align-items: center; }
-
-        .home-btn, .pdf-btn { 
-            text-decoration: none; color: #2c3e50; font-weight: bold; 
-            display: flex; align-items: center; gap: 8px; font-size: 14px; 
-            background: var(--secondary); padding: 8px 15px; border-radius: 10px;
-            border: none; cursor: pointer;
-        }
+        .home-btn, .pdf-btn { text-decoration: none; color: #2c3e50; font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 14px; background: var(--secondary); padding: 8px 15px; border-radius: 10px; border: none; cursor: pointer; }
         .pdf-btn { background: #e74c3c; color: white; }
-
-        .theme-btn {
-            background: var(--primary); color: var(--white);
-            border: 2px solid var(--secondary); padding: 8px 15px;
-            border-radius: 10px; cursor: pointer; font-weight: bold;
-        }
-
-        header { 
-            width: 100%; background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
-            color: white; padding: 50px 0; text-align: center; border-bottom: 5px solid var(--secondary);
-        }
-
-        .container { 
-            position: relative; 
-            width: 1400px; 
-            height: 2600px; /* تم زيادة الطول لاستيعاب الإزاحة */
-            margin: 30px auto; 
-            flex-shrink: 0;
-            transition: 0.3s;
-        }
-
-        .card { 
-            width: 170px; height: 100px; background: var(--white); border-radius: 15px; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid var(--card-border-default);
-            position: absolute; z-index: 10; cursor: pointer; transition: all 0.3s ease;
-            overflow: hidden; user-select: none; -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-
-        .status-icon {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 50px; opacity: 0; transition: 0.3s;
-            pointer-events: none; z-index: 5;
-        }
-
+        .theme-btn { background: var(--primary); color: var(--white); border: 2px solid var(--secondary); padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        header { width: 100%; background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%); color: white; padding: 50px 0; text-align: center; border-bottom: 5px solid var(--secondary); }
+        .container { position: relative; width: 1400px; height: 2600px; margin: 30px auto; flex-shrink: 0; transition: 0.3s; }
+        .card { width: 170px; height: 100px; background: var(--white); border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--card-border-default); position: absolute; z-index: 10; cursor: pointer; transition: all 0.3s ease; overflow: hidden; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+        .status-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; opacity: 0; transition: 0.3s; pointer-events: none; z-index: 5; }
         .card.is-completed .status-icon.check { opacity: 0.2; color: #27ae60; display: block; }
         .card.is-completed { border: 2px solid #27ae60 !important; }
-
         .container.highlight-mode .card { opacity: 0.15; filter: grayscale(1); }
         .card.active-target { opacity: 1 !important; filter: none !important; border: 3px solid var(--secondary) !important; transform: scale(1.1); z-index: 100; }
         .card.is-prereq { opacity: 1 !important; filter: none !important; border: 3px solid #27ae60 !important; }
         .card.is-prereq .status-icon.check { opacity: 0.7; color: #27ae60; }
         .card.is-next { opacity: 1 !important; filter: none !important; border: 3px solid #e74c3c !important; }
         .card.is-next .status-icon.lock { opacity: 0.7; color: #e74c3c; }
-
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
         .code { font-size: 11px; color: var(--secondary); font-weight: bold; margin-bottom: 5px; }
         .name { font-size: 14px; color: var(--primary); font-weight: 600; text-align: center; padding: 0 5px; }
-        
         .line-h { position: absolute; height: 2px; background: var(--line-color); z-index: 1; }
         .line-v { position: absolute; width: 2px; background: var(--line-color); z-index: 1; }
         svg.connectors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; overflow: visible; }
-
-        .modal {
-            display: none; position: fixed; z-index: 3000; left: 0; top: 0;
-            width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.8); 
-            backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background-color: var(--white); 
-            margin: 5% auto; 
-            padding: 50px;
-            border-radius: 30px; 
-            width: 700px;
-            max-width: 90%; 
-            text-align: right;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5); 
-            border-top: 15px solid var(--secondary);
-            position: relative; 
-            color: var(--primary);
-            font-size: 28px;
-        }
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .modal-content { background-color: var(--white); margin: 5% auto; padding: 50px; border-radius: 30px; width: 700px; max-width: 90%; text-align: right; box-shadow: 0 40px 100px rgba(0,0,0,0.5); border-top: 15px solid var(--secondary); position: relative; color: var(--primary); font-size: 28px; }
         .modal-content h2 { font-size: 45px; margin-top: 0; }
         .close-btn { position: absolute; top: 20px; left: 30px; font-size: 60px; cursor: pointer; color: #e74c3c; }
-        
-        .action-btn {
-            background: #27ae60; color: white; border: none;
-            padding: 20px; border-radius: 15px; font-size: 24px;
-            cursor: pointer; width: 100%; margin-top: 30px; font-weight: bold;
-        }
+        .action-btn { background: #27ae60; color: white; border: none; padding: 20px; border-radius: 15px; font-size: 24px; cursor: pointer; width: 100%; margin-top: 30px; font-weight: bold; }
         .action-btn.remove { background: #e74c3c; }
-
         footer { width: 100%; background: var(--white); padding: 40px 0; border-top: 1px solid var(--card-border-default); text-align: center; }
-        .counter-oval {
-            display: inline-flex; align-items: center; background-color: #2c3e50;
-            padding: 10px 30px; border-radius: 100px; border: 2px solid var(--secondary);
-            color: var(--secondary); font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: bold; direction: ltr;
-        }
-
-        @media print {
-            @page { size: A4 landscape; margin: 0; }
-            body { min-width: 1400px !important; background: white !important; direction: rtl !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .nav-bar, .theme-btn, .pdf-btn, .home-btn, header p, footer, .modal { display: none !important; }
-            header { padding: 15px 0 !important; background: #1a252f !important; width: 1400px !important; }
-            .container { margin: 0 !important; width: 1400px !important; position: relative !important; zoom: 0.63; transform: none !important; }
-            .line-h, .line-v { background: #aaa !important; display: block !important; visibility: visible !important; }
-            svg.connectors { display: block !important; visibility: visible !important; width: 100% !important; height: 100% !important; }
-            svg.connectors path, svg.connectors line { stroke: #aaa !important; stroke-width: 2px !important; }
-            .card { border: 1px solid #aaa !important; box-shadow: none !important; background-color: white !important; }
-        }
+        .counter-oval { display: inline-flex; align-items: center; background-color: #2c3e50; padding: 10px 30px; border-radius: 100px; border: 2px solid var(--secondary); color: var(--secondary); font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: bold; direction: ltr; }
+        @media print { @page { size: A4 landscape; margin: 0; } body { min-width: 1400px !important; background: white !important; direction: rtl !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .nav-bar, .theme-btn, .pdf-btn, .home-btn, header p, footer, .modal { display: none !important; } header { padding: 15px 0 !important; background: #1a252f !important; width: 1400px !important; } .container { margin: 0 !important; width: 1400px !important; position: relative !important; zoom: 0.63; transform: none !important; } .line-h, .line-v { background: #aaa !important; display: block !important; visibility: visible !important; } svg.connectors { display: block !important; visibility: visible !important; width: 100% !important; height: 100% !important; } svg.connectors path, svg.connectors line { stroke: #aaa !important; stroke-width: 2px !important; } .card { border: 1px solid #aaa !important; box-shadow: none !important; background-color: white !important; } }
     </style>
 </head>
 <body>
-
-    <div class="nav-bar">
-        <div class="nav-right">
-            <a href="index.html" class="home-btn">🏠 الرئيسية</a>
-            <button class="pdf-btn" onclick="window.print()">📄 تحميل PDF</button>
-        </div>
-        <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 وضع ليلي</button>
-    </div>
-
-    <header>
-        <h1>المخطط الأكاديمي الشامل</h1>
-        <p>ضغطة واحدة للتفاصيل | ضغطة مطولة للمسار والمتطلبات</p>
-    </header>
-
+    <div class="nav-bar"><div class="nav-right"><a href="index.html" class="home-btn">الرئيسية</a><button class="pdf-btn" onclick="window.print()">تحميل PDF</button></div><button class="theme-btn" onclick="toggleTheme()" id="theme-btn">الوضع الليلي</button></div>
+    <header><h1>المخطط الأكاديمي الشامل</h1><p>اضغط ضغطة عادية لعرض تفاصيل المادة، واضغط ضغطة مطولة لإظهار المتطلبات السابقة والمواد التالية.</p></header>
     <div class="container" id="main-container">
-        <svg class="connectors">
-            <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#bdc3c7" />
-                </marker>
-            </defs>
-            <path d="M 385 250 Q 385 100 500 100 L 960 100" stroke="#bdc3c7" stroke-width="2" fill="none" marker-start="url(#arrowhead)"/>
-            
-            <line x1="1045" y1="1900" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" />
-            <line x1="1045" y1="2300" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" />
-            <line x1="1045" y1="2075" x2="915" y2="2075" stroke="#bdc3c7" stroke-width="2" marker-end="url(#arrowhead)" />
-        </svg>
-
-        <div class="card" style="top: 250px; right: 50px;" data-name="رياضة 1" data-code="GS101" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS101</span><span class="name">رياضة 1</span></div>
-        <div class="line-h" style="top: 300px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 270px;" data-name="رياضة 2" data-code="GS102" data-units="4 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS102</span><span class="name">رياضة 2</span></div>
-        <div class="line-v" style="top: 150px; right: 354px; height: 100px;"></div>
-        <div class="card" style="top: 50px; right: 270px;" data-name="برمجة حاسوب" data-code="GS200" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS200</span><span class="name">برمجة حاسوب</span></div>
-        <div class="line-v" style="top: 350px; right: 354px; height: 100px;"></div>
-        <div class="card" style="top: 450px; right: 270px;" data-name="الإحصاء والاحتمالات" data-code="GS206" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS206</span><span class="name">الإحصاء</span></div>
-        <div class="line-h" style="top: 300px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 490px;" data-name="رياضة 3" data-code="GS203" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS203</span><span class="name">رياضة 3</span></div>
-        <div class="line-h" style="top: 300px; right: 660px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 710px;" data-name="رياضة 4" data-code="GS204" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS204</span><span class="name">رياضة 4</span></div>
-        <div class="line-h" style="top: 300px; right: 880px; width: 50px;"></div>
-        <div class="card" style="top: 250px; right: 930px;" data-name="التحليل العددي" data-code="GS309" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS309</span><span class="name">التحليل العددي</span></div>
-
-        <div class="card" style="top: 650px; right: 50px;" data-name="استاتيكا" data-code="GE121" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE121</span><span class="name">استاتيكا</span></div>
-        <div class="line-h" style="top: 700px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 650px; right: 270px;" data-name="ديناميكا" data-code="GE222" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE222</span><span class="name">ديناميكا</span></div>
-        
-        <div class="card" style="top: 850px; right: 50px;" data-name="كيمياء عامة" data-code="GS115" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS115</span><span class="name">كيمياء عامة</span></div>
-        <div class="line-h" style="top: 900px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 850px; right: 270px;" data-name="كيمياء معمل" data-code="L115-GS" data-units="1 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">L115-GS</span><span class="name">كيمياء معمل</span></div>
-
-        <div class="card" style="top: 1250px; right: 50px;" data-name="فيزياء 1" data-code="GS111" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS111</span><span class="name">فيزياء 1</span></div>
-        
-        <div class="line-v" style="top: 1350px; right: 134px; height: 100px;"></div>
-        <div class="card" style="top: 1450px; right: 50px;" data-name="خواص مواد" data-code="GE133" data-units="3 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE133</span><span class="name">خواص مواد</span></div>
-
-        <div class="line-h" style="top: 1300px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 1250px; right: 270px;" data-name="فيزياء 2" data-code="GS112" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS112</span><span class="name">فيزياء 2</span></div>
-        <div class="line-v" style="top: 1150px; right: 354px; height: 100px;"></div>
-        <div class="card" style="top: 1050px; right: 270px;" data-name="أسس هندسة كهربائية" data-code="GE280" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE280</span><span class="name">أسس هندسة كهربائية</span></div>
-        <div class="line-h" style="top: 1300px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 1250px; right: 490px;" data-name="فيزياء معمل" data-code="L112-GS" data-units="1 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">L112-GS</span><span class="name">فيزياء معمل</span></div>
-
-        <div class="card" style="top: 1650px; right: 50px;" data-name="رسم هندسي" data-code="GS126" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS126</span><span class="name">رسم هندسي</span></div>
-
-        <div class="card" style="top: 1850px; right: 50px;" data-name="لغة إنجليزية 1" data-code="GH141" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH141</span><span class="name">لغة إنجليزية 1</span></div>
-        <div class="line-h" style="top: 1900px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 1850px; right: 270px;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div>
-        <div class="line-h" style="top: 1900px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 1850px; right: 490px;" data-name="لغة إنجليزية 3" data-code="GH241" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH241</span><span class="name">لغة إنجليزية 3</span></div>
-        <div class="card" style="top: 2025px; right: 490px;" data-name="كتابة تقارير" data-code="GH450" data-units="1 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
-
-        <div class="card" style="top: 2250px; right: 50px;" data-name="لغة عربية 1" data-code="GH150" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH150</span><span class="name">لغة عربية 1</span></div>
-        <div class="line-h" style="top: 2300px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 2250px; right: 270px;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div>
-        <div class="line-h" style="top: 2300px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 2250px; right: 490px;" data-name="ثقافة وطنية" data-code="GH299" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH299</span><span class="name">ثقافة وطنية</span></div>
+        <svg class="connectors"><defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#bdc3c7" /></marker></defs><path d="M 385 250 Q 385 100 500 100 L 960 100" stroke="#bdc3c7" stroke-width="2" fill="none" marker-start="url(#arrowhead)"/><line x1="1045" y1="1900" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" /><line x1="1045" y1="2300" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" /><line x1="1045" y1="2075" x2="915" y2="2075" stroke="#bdc3c7" stroke-width="2" marker-end="url(#arrowhead)" /></svg>
+        <div class="card" style="top: 250px; right: 50px;" data-name="رياضة 1" data-code="GS101" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS101</span><span class="name">رياضة 1</span></div><div class="line-h" style="top: 300px; right: 220px; width: 50px;"></div><div class="card" style="top: 250px; right: 270px;" data-name="رياضة 2" data-code="GS102" data-units="4 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS102</span><span class="name">رياضة 2</span></div><div class="line-v" style="top: 150px; right: 354px; height: 100px;"></div><div class="card" style="top: 50px; right: 270px;" data-name="برمجة حاسوب" data-code="GS200" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS200</span><span class="name">برمجة حاسوب</span></div><div class="line-v" style="top: 350px; right: 354px; height: 100px;"></div><div class="card" style="top: 450px; right: 270px;" data-name="الإحصاء والاحتمالات" data-code="GS206" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS206</span><span class="name">الإحصاء</span></div><div class="line-h" style="top: 300px; right: 440px; width: 50px;"></div><div class="card" style="top: 250px; right: 490px;" data-name="رياضة 3" data-code="GS203" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS203</span><span class="name">رياضة 3</span></div><div class="line-h" style="top: 300px; right: 660px; width: 50px;"></div><div class="card" style="top: 250px; right: 710px;" data-name="رياضة 4" data-code="GS204" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS204</span><span class="name">رياضة 4</span></div><div class="line-h" style="top: 300px; right: 880px; width: 50px;"></div><div class="card" style="top: 250px; right: 930px;" data-name="التحليل العددي" data-code="GS309" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS309</span><span class="name">التحليل العددي</span></div>
+        <div class="card" style="top: 650px; right: 50px;" data-name="استاتيكا" data-code="GE121" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GE121</span><span class="name">استاتيكا</span></div><div class="line-h" style="top: 700px; right: 220px; width: 50px;"></div><div class="card" style="top: 650px; right: 270px;" data-name="ديناميكا" data-code="GE222" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GE222</span><span class="name">ديناميكا</span></div>
+        <div class="card" style="top: 850px; right: 50px;" data-name="كيمياء عامة" data-code="GS115" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS115</span><span class="name">كيمياء عامة</span></div><div class="line-h" style="top: 900px; right: 220px; width: 50px;"></div><div class="card" style="top: 850px; right: 270px;" data-name="كيمياء معمل" data-code="L115-GS" data-units="1 وحدة"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">L115-GS</span><span class="name">كيمياء معمل</span></div>
+        <div class="card" style="top: 1250px; right: 50px;" data-name="فيزياء 1" data-code="GS111" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS111</span><span class="name">فيزياء 1</span></div><div class="line-v" style="top: 1350px; right: 134px; height: 100px;"></div><div class="card" style="top: 1450px; right: 50px;" data-name="خواص مواد" data-code="GE133" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GE133</span><span class="name">خواص مواد</span></div>
+        <div class="line-h" style="top: 1300px; right: 220px; width: 50px;"></div><div class="card" style="top: 1250px; right: 270px;" data-name="فيزياء 2" data-code="GS112" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS112</span><span class="name">فيزياء 2</span></div><div class="line-v" style="top: 1150px; right: 354px; height: 100px;"></div><div class="card" style="top: 1050px; right: 270px;" data-name="أسس هندسة كهربائية" data-code="GE280" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GE280</span><span class="name">أسس هندسة كهربائية</span></div><div class="line-h" style="top: 1300px; right: 440px; width: 50px;"></div><div class="card" style="top: 1250px; right: 490px;" data-name="فيزياء معمل" data-code="L112-GS" data-units="1 وحدة"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">L112-GS</span><span class="name">فيزياء معمل</span></div>
+        <div class="card" style="top: 1650px; right: 50px;" data-name="رسم هندسي" data-code="GS126" data-units="3 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GS126</span><span class="name">رسم هندسي</span></div>
+        <div class="card" style="top: 1850px; right: 50px;" data-name="لغة إنجليزية 1" data-code="GH141" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH141</span><span class="name">لغة إنجليزية 1</span></div><div class="line-h" style="top: 1900px; right: 220px; width: 50px;"></div><div class="card" style="top: 1850px; right: 270px;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div><div class="line-h" style="top: 1900px; right: 440px; width: 50px;"></div><div class="card" style="top: 1850px; right: 490px;" data-name="لغة إنجليزية 3" data-code="GH241" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH241</span><span class="name">لغة إنجليزية 3</span></div><div class="card" style="top: 2025px; right: 490px;" data-name="كتابة التقارير" data-code="GH450" data-units="1 وحدة"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
+        <div class="card" style="top: 2250px; right: 50px;" data-name="لغة عربية 1" data-code="GH150" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH150</span><span class="name">لغة عربية 1</span></div><div class="line-h" style="top: 2300px; right: 220px; width: 50px;"></div><div class="card" style="top: 2250px; right: 270px;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div><div class="line-h" style="top: 2300px; right: 440px; width: 50px;"></div><div class="card" style="top: 2250px; right: 490px;" data-name="ثقافة وطنية" data-code="GH299" data-units="2 وحدات"><div class="status-icon check">✓</div><div class="status-icon lock">🔒</div><span class="code">GH299</span><span class="name">ثقافة وطنية</span></div>
     </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="m-title"></h2>
-            <hr>
-            <p><strong>🔹 الرمز:</strong> <span id="m-code" style="color: var(--secondary); font-weight: bold;"></span></p>
-            <p><strong>🔹 الوحدات:</strong> <span id="m-units"></span></p>
-            <button id="modal-action-btn" class="action-btn" onclick="toggleCompletion()">تحديد كمادة مكتملة</button>
-        </div>
-    </div>
-
-    <footer>
-        <div class="counter-oval" id="subjects-counter">00000</div>
-        <p style="margin-top: 20px; color: #bdc3c7;">جامعة الزاوية - كلية الهندسة - 2026</p>
-    </footer>
-
+    <div id="myModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">&times;</span><h2 id="m-title"></h2><hr><p><strong>الرمز:</strong> <span id="m-code" style="color: var(--secondary); font-weight: bold;"></span></p><p><strong>الوحدات:</strong> <span id="m-units"></span></p><button id="modal-action-btn" class="action-btn" onclick="toggleCompletion()">تحديد كمادة مكتملة</button></div></div>
+    <footer><div class="counter-oval" id="subjects-counter">00000</div><p style="margin-top: 20px; color: #bdc3c7;">جامعة الزاوية - كلية الهندسة - 2026</p></footer>
     <script>
-        // دمج تبعيات المادة الجديدة في القائمة الأصلية
         const dependencies = {
-            'رياضة 1': { req: [], next: ['رياضة 2'] },
-            'رياضة 2': { req: ['رياضة 1'], next: ['رياضة 3', 'برمجة حاسوب', 'الإحصاء والاحتمالات'] },
-            'رياضة 3': { req: ['رياضة 2'], next: ['رياضة 4'] },
-            'رياضة 4': { req: ['رياضة 3'], next: ['التحليل العددي'] },
-            'التحليل العددي': { req: ['رياضة 4', 'برمجة حاسوب'], next: [] },
-            'برمجة حاسوب': { req: ['رياضة 2'], next: ['التحليل العددي'] },
-            'الإحصاء والاحتمالات': { req: ['رياضة 2'], next: [] },
-            'استاتيكا': { req: [], next: ['ديناميكا'] },
-            'ديناميكا': { req: ['استاتيكا'], next: [] },
-            'كيمياء عامة': { req: [], next: ['كيمياء معمل'] },
-            'كيمياء معمل': { req: ['كيمياء عامة'], next: [] },
-            'فيزياء 1': { req: [], next: ['فيزياء 2', 'خواص مواد'] },
-            'خواص مواد': { req: ['فيزياء 1'], next: [] },
-            'فيزياء 2': { req: ['فيزياء 1'], next: ['فيزياء معمل', 'أسس هندسة كهربائية'] },
-            'أسس هندسة كهربائية': { req: ['فيزياء 2'], next: [] },
-            'فيزياء معمل': { req: ['فيزياء 2'], next: [] },
-            'لغة إنجليزية 1': { req: [], next: ['لغة إنجليزية 2'] },
-            'لغة إنجليزية 2': { req: ['لغة إنجليزية 1'], next: ['لغة إنجليزية 3', 'كتابة تقارير'] },
-            'لغة إنجليزية 3': { req: ['لغة إنجليزية 2'], next: [] },
-            'لغة عربية 1': { req: [], next: ['لغة عربية 2'] },
-            'لغة عربية 2': { req: ['لغة عربية 1'], next: ['ثقافة وطنية', 'كتابة تقارير'] },
-            'ثقافة وطنية': { req: ['لغة عربية 2'], next: [] },
-            'كتابة تقارير': { req: ['لغة إنجليزية 2', 'لغة عربية 2'], next: [] }
+            'رياضة 1': { req: [], next: ['رياضة 2'] }, 'رياضة 2': { req: ['رياضة 1'], next: ['رياضة 3', 'برمجة حاسوب', 'الإحصاء والاحتمالات'] }, 'رياضة 3': { req: ['رياضة 2'], next: ['رياضة 4'] }, 'رياضة 4': { req: ['رياضة 3'], next: ['التحليل العددي'] },
+            'التحليل العددي': { req: ['رياضة 4', 'برمجة حاسوب'], next: [] }, 'برمجة حاسوب': { req: ['رياضة 2'], next: ['التحليل العددي'] }, 'الإحصاء والاحتمالات': { req: ['رياضة 2'], next: [] }, 'استاتيكا': { req: [], next: ['ديناميكا'] }, 'ديناميكا': { req: ['استاتيكا'], next: [] },
+            'كيمياء عامة': { req: [], next: ['كيمياء معمل'] }, 'كيمياء معمل': { req: ['كيمياء عامة'], next: [] }, 'فيزياء 1': { req: [], next: ['فيزياء 2', 'خواص مواد'] }, 'خواص مواد': { req: ['فيزياء 1'], next: [] }, 'فيزياء 2': { req: ['فيزياء 1'], next: ['فيزياء معمل', 'أسس هندسة كهربائية'] },
+            'أسس هندسة كهربائية': { req: ['فيزياء 2'], next: [] }, 'فيزياء معمل': { req: ['فيزياء 2'], next: [] }, 'لغة إنجليزية 1': { req: [], next: ['لغة إنجليزية 2'] }, 'لغة إنجليزية 2': { req: ['لغة إنجليزية 1'], next: ['لغة إنجليزية 3', 'كتابة التقارير'] }, 'لغة إنجليزية 3': { req: ['لغة إنجليزية 2'], next: [] },
+            'لغة عربية 1': { req: [], next: ['لغة عربية 2'] }, 'لغة عربية 2': { req: ['لغة عربية 1'], next: ['ثقافة وطنية', 'كتابة التقارير'] }, 'ثقافة وطنية': { req: ['لغة عربية 2'], next: [] }, 'كتابة التقارير': { req: ['لغة إنجليزية 2', 'لغة عربية 2'], next: [] }
         };
-
-        let pressTimer;
-        let isLongPress = false;
-        let activeSubject = "";
-        const LONG_PRESS_TIME = 500;
-
+        let pressTimer; let isLongPress = false; let activeSubject = ''; const LONG_PRESS_TIME = 500;
         document.querySelectorAll('.card').forEach(card => {
-            const name = card.getAttribute('data-name');
-            const code = card.getAttribute('data-code');
-            const units = card.getAttribute('data-units');
-
-            card.addEventListener('mousedown', () => {
-                isLongPress = false;
-                pressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    activateHighlight(name);
-                }, LONG_PRESS_TIME);
-            });
-
+            const name = card.getAttribute('data-name'); const code = card.getAttribute('data-code'); const units = card.getAttribute('data-units');
+            card.addEventListener('mousedown', () => { isLongPress = false; pressTimer = setTimeout(() => { isLongPress = true; activateHighlight(name); }, LONG_PRESS_TIME); });
             card.addEventListener('mouseup', () => clearTimeout(pressTimer));
-            card.addEventListener('touchstart', () => {
-                isLongPress = false;
-                pressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    activateHighlight(name);
-                }, LONG_PRESS_TIME);
-            }, {passive: true});
+            card.addEventListener('touchstart', () => { isLongPress = false; pressTimer = setTimeout(() => { isLongPress = true; activateHighlight(name); }, LONG_PRESS_TIME); }, {passive: true});
             card.addEventListener('touchend', () => clearTimeout(pressTimer));
-
-            card.addEventListener('click', () => {
-                if (!isLongPress) {
-                    if (document.getElementById('main-container').classList.contains('highlight-mode')) {
-                        closeHighlight();
-                    } else {
-                        showDetails(name, code, units);
-                    }
-                }
-            });
+            card.addEventListener('click', () => { if (!isLongPress) { if (document.getElementById('main-container').classList.contains('highlight-mode')) closeHighlight(); else showDetails(name, code, units); } });
         });
-
         function activateHighlight(name) {
-            const container = document.getElementById('main-container');
-            container.classList.add('highlight-mode');
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.remove('active-target', 'is-prereq', 'is-next');
-                const cardName = card.getAttribute('data-name');
-                if (cardName === name) card.classList.add('active-target');
-                else if (dependencies[name]) {
-                    if (dependencies[name].req.includes(cardName)) card.classList.add('is-prereq');
-                    if (dependencies[name].next.includes(cardName)) card.classList.add('is-next');
-                }
-            });
+            const container = document.getElementById('main-container'); container.classList.add('highlight-mode');
+            document.querySelectorAll('.card').forEach(card => { card.classList.remove('active-target', 'is-prereq', 'is-next'); const cardName = card.getAttribute('data-name'); if (cardName === name) card.classList.add('active-target'); else if (dependencies[name]) { if (dependencies[name].req.includes(cardName)) card.classList.add('is-prereq'); if (dependencies[name].next.includes(cardName)) card.classList.add('is-next'); } });
         }
-
-        function closeHighlight() {
-            document.getElementById('main-container').classList.remove('highlight-mode');
-            document.querySelectorAll('.card').forEach(c => c.classList.remove('active-target', 'is-prereq', 'is-next'));
-        }
-
+        function closeHighlight() { document.getElementById('main-container').classList.remove('highlight-mode'); document.querySelectorAll('.card').forEach(c => c.classList.remove('active-target', 'is-prereq', 'is-next')); }
         function showDetails(name, code, units) {
-            activeSubject = name;
-            document.getElementById('m-title').innerText = name;
-            document.getElementById('m-code').innerText = code;
-            document.getElementById('m-units').innerText = units;
-            
-            const completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
-            const btn = document.getElementById('modal-action-btn');
-            if(completed.includes(name)) {
-                btn.innerText = "إلغاء الإكمال";
-                btn.classList.add('remove');
-            } else {
-                btn.innerText = "تحديد كمادة مكتملة";
-                btn.classList.remove('remove');
-            }
-            document.getElementById('myModal').style.display = "block";
+            activeSubject = name; document.getElementById('m-title').innerText = name; document.getElementById('m-code').innerText = code; document.getElementById('m-units').innerText = units;
+            const completed = JSON.parse(localStorage.getItem('done_subs') || '[]'); const btn = document.getElementById('modal-action-btn');
+            if(completed.includes(name)) { btn.innerText = 'إلغاء الإكمال'; btn.classList.add('remove'); } else { btn.innerText = 'تحديد كمادة مكتملة'; btn.classList.remove('remove'); }
+            document.getElementById('myModal').style.display = 'block';
         }
-
         function toggleCompletion() {
-            let completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
-            const card = document.querySelector(`.card[data-name="${activeSubject}"]`);
-            
-            if(completed.includes(activeSubject)) {
-                completed = completed.filter(s => s !== activeSubject);
-                card.classList.remove('is-completed');
-            } else {
-                completed.push(activeSubject);
-                card.classList.add('is-completed');
-            }
-            localStorage.setItem('done_subs', JSON.stringify(completed));
-            closeModal();
+            let completed = JSON.parse(localStorage.getItem('done_subs') || '[]'); const card = document.querySelector(`.card[data-name="${activeSubject}"]`);
+            if(completed.includes(activeSubject)) { completed = completed.filter(s => s !== activeSubject); card.classList.remove('is-completed'); } else { completed.push(activeSubject); card.classList.add('is-completed'); }
+            localStorage.setItem('done_subs', JSON.stringify(completed)); closeModal();
         }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = "none";
-        }
-
-        function toggleTheme() {
-            const body = document.documentElement;
-            const targetTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', targetTheme);
-            localStorage.setItem('theme', targetTheme);
-            document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
-        }
-
+        function closeModal() { document.getElementById('myModal').style.display = 'none'; }
+        function toggleTheme() { const body = document.documentElement; const targetTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', targetTheme); localStorage.setItem('theme', targetTheme); document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'; }
         window.onclick = (e) => { if (e.target == document.getElementById('myModal')) closeModal(); }
-
         window.onload = () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
-            
-            const completed = JSON.parse(localStorage.getItem('done_subs') || "[]");
-            completed.forEach(s => {
-                const card = document.querySelector(`.card[data-name="${s}"]`);
-                if(card) card.classList.add('is-completed');
-            });
-
-            let count = localStorage.getItem('visitCount_Subjects') || 412;
-            count = parseInt(count) + 1;
-            localStorage.setItem('visitCount_Subjects', count);
-            document.getElementById('subjects-counter').innerText = count.toString().padStart(5, '0');
+            const savedTheme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', savedTheme); document.getElementById('theme-btn').innerText = savedTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي';
+            const completed = JSON.parse(localStorage.getItem('done_subs') || '[]'); completed.forEach(s => { const card = document.querySelector(`.card[data-name="${s}"]`); if(card) card.classList.add('is-completed'); });
+            let count = localStorage.getItem('visitCount_Subjects') || 412; count = parseInt(count) + 1; localStorage.setItem('visitCount_Subjects', count); document.getElementById('subjects-counter').innerText = count.toString().padStart(5, '0');
         }
     </script>
 </body>

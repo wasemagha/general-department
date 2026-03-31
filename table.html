@@ -5,136 +5,34 @@
     <meta charset="UTF-8">
     <title>الجدول الدراسي الأسبوعي - نسخة الطباعة</title>
     <style>
-        /* تعريف متغيرات الألوان للوضع المظلم */
-        :root {
-            --bg-body: #f4f7f9;
-            --bg-table: white;
-            --text-main: #2c3e50;
-            --border-color: #dee2e6;
-            --day-bg: #f8fafc;
-        }
-
-        [data-theme="dark"] {
-            --bg-body: #121212;
-            --bg-table: #1e1e1e;
-            --text-main: #ecf0f1;
-            --border-color: #333;
-            --day-bg: #2d2d2d;
-        }
-
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-body); 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            color: var(--text-main);
-            transition: 0.3s;
-        }
-
-        .header-container { 
-            width: 100%; 
-            max-width: 1100px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-        }
-
+        :root { --bg-body: #f4f7f9; --bg-table: white; --text-main: #2c3e50; --border-color: #dee2e6; --day-bg: #f8fafc; }
+        [data-theme="dark"] { --bg-body: #121212; --bg-table: #1e1e1e; --text-main: #ecf0f1; --border-color: #333; --day-bg: #2d2d2d; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-body); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; color: var(--text-main); transition: 0.3s; }
+        .header-container { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .actions { display: flex; gap: 10px; align-items: center; }
-
-        /* زر تبديل الوضع المظلم */
-        .theme-btn {
-            background: #f39c12;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .back-btn { 
-            text-decoration: none; color: #fff; background: #3498db; 
-            padding: 8px 15px; border-radius: 8px; font-size: 14px; font-weight: bold; 
-        }
-
-        .print-btn {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .table-container { 
-            width: 100%; 
-            max-width: 1100px; 
-            background: var(--bg-table); 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-        }
-
+        .theme-btn { background: #f39c12; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .back-btn { text-decoration: none; color: #fff; background: #3498db; padding: 8px 15px; border-radius: 8px; font-size: 14px; font-weight: bold; }
+        .print-btn { background-color: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .table-container { width: 100%; max-width: 1100px; background: var(--bg-table); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-
-        th, td { 
-            border: 1px solid var(--border-color); 
-            padding: 12px; 
-            text-align: center; 
-            word-wrap: break-word;
-            color: var(--text-main);
-        }
-
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: center; word-wrap: break-word; color: var(--text-main); }
         th { background-color: #2c3e50; color: white; font-size: 15px; }
-
         .day-column { background-color: var(--day-bg); font-weight: bold; width: 80px; }
-
-        .subject-cell {
-            height: 75px;
-            font-size: 15px;
-            outline: none;
-            vertical-align: middle;
-        }
-
+        .subject-cell { height: 75px; font-size: 15px; outline: none; vertical-align: middle; }
         .time-slot { font-size: 11px; display: block; color: #7f8c8d; margin-top: 4px; }
-
         h2, h3 { color: var(--text-main); margin: 0; }
-
-        @media print {
-            body { background: white !important; padding: 0; color: black !important; }
-            .header-container, .back-btn, .print-btn, .theme-btn { display: none !important; }
-            .table-container { box-shadow: none; padding: 0; width: 100%; max-width: 100%; background: white !important; }
-            table { border: 1px solid #000; }
-            th { background-color: #eee !important; color: #000 !important; border: 1px solid #000; }
-            td { border: 1px solid #000; color: black !important; }
-            .day-column { background-color: white !important; }
-            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        }
+        @media print { body { background: white !important; padding: 0; color: black !important; } .header-container, .back-btn, .print-btn, .theme-btn { display: none !important; } .table-container { box-shadow: none; padding: 0; width: 100%; max-width: 100%; background: white !important; } table { border: 1px solid #000; } th { background-color: #eee !important; color: #000 !important; border: 1px solid #000; } td { border: 1px solid #000; color: black !important; } .day-column { background-color: white !important; } * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
     </style>
 </head>
 <body>
-
     <div class="header-container">
-        <h2>📅 الجدول الدراسي</h2>
+        <h2>الجدول الدراسي</h2>
         <div class="actions">
-            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 وضع ليلي</button>
-            <button class="print-btn" onclick="window.print()">
-                🖨️ طباعة / حفظ PDF
-            </button>
-            <a href="index.html" class="back-btn">🏠 الرئيسية</a>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">الوضع الليلي</button>
+            <button class="print-btn" onclick="window.print()">طباعة / حفظ PDF</button>
+            <a href="index.html" class="back-btn">الرئيسية</a>
         </div>
     </div>
-
     <div class="table-container">
         <h3 style="text-align: center; margin-bottom: 20px;">الجدول الدراسي الأسبوعي</h3>
         <table>
@@ -157,23 +55,19 @@
             </tbody>
         </table>
     </div>
-
     <script>
         function toggleTheme() {
             const body = document.documentElement;
             const currentTheme = body.getAttribute('data-theme');
             const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             body.setAttribute('data-theme', targetTheme);
             localStorage.setItem('theme', targetTheme);
             updateBtn(targetTheme);
         }
-
         function updateBtn(theme) {
             const btn = document.getElementById('themeBtn');
-            btn.innerText = theme === 'dark' ? '☀️ وضع نهاري' : '🌙 وضع ليلي';
+            btn.innerText = theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي';
         }
-
         window.onload = function() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);

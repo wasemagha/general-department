@@ -3,313 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الرقمية | قسم العام</title>
+    <title>المكتبة الرقمية | القسم العام</title>
     <style>
-        /* 1. المتغيرات والألوان الأصيلة */
-        :root {
-            --primary: #2c3e50;
-            --secondary: #f39c12;
-            --accent: #3498db;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --text-muted: #7f8c8d;
-            --header-gradient: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
-        }
-
-        [data-theme="dark"] {
-            --bg: #121212;
-            --white: #1e1e1e;
-            --primary: #ecf0f1;
-            --text-muted: #bdc3c7;
-            --header-gradient: linear-gradient(135deg, #000000 0%, #1a252f 100%);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            color: var(--primary);
-            transition: 0.3s;
-            min-height: 100vh;
-        }
-
-        header {
-            background: var(--header-gradient);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--secondary);
-            position: relative;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--secondary);
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        /* 2. شريط البحث */
-        .search-container {
-            max-width: 600px;
-            margin: -25px auto 40px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        #searchBar {
-            width: 100%;
-            padding: 15px 25px;
-            border-radius: 50px;
-            border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            font-size: 1.1rem;
-            outline: none;
-            background: var(--white);
-            color: var(--primary);
-        }
-
-        /* 3. شبكة المكتبة */
-        .library-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            padding: 0 25px;
-        }
-
-        .lib-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .lib-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-        }
-
-        .lib-card h3 {
-            margin: 0 0 20px 0;
-            font-size: 1.4rem;
-        }
-
-        .resource-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .res-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            color: white;
-            transition: 0.2s;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-        }
-
-        .btn-book { background-color: #3498db; }
-        .btn-sheets { background-color: #27ae60; }
-        .btn-video { background-color: #e74c3c; }
-
+        :root { --primary: #2c3e50; --secondary: #f39c12; --accent: #3498db; --bg: #f4f7f6; --white: #ffffff; --text-muted: #7f8c8d; --header-gradient: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%); }
+        [data-theme="dark"] { --bg: #121212; --white: #1e1e1e; --primary: #ecf0f1; --text-muted: #bdc3c7; --header-gradient: linear-gradient(135deg, #000000 0%, #1a252f 100%); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; color: var(--primary); transition: 0.3s; min-height: 100vh; }
+        header { background: var(--header-gradient); color: white; padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--secondary); position: relative; }
+        .back-btn { position: absolute; top: 20px; right: 20px; background: var(--secondary); color: white; text-decoration: none; padding: 8px 15px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; }
+        .search-container { max-width: 600px; margin: -25px auto 40px; padding: 0 20px; position: relative; z-index: 10; }
+        #searchBar { width: 100%; padding: 15px 25px; border-radius: 50px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 1.1rem; outline: none; background: var(--white); color: var(--primary); }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto 60px; padding: 0 25px; }
+        .lib-card { background: var(--white); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; display: flex; flex-direction: column; text-align: center; }
+        .lib-card:hover { transform: translateY(-10px); border-color: var(--secondary); }
+        .lib-card h3 { margin: 0 0 20px 0; font-size: 1.4rem; }
+        .resource-links { display: flex; flex-direction: column; gap: 10px; }
+        .res-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; color: white; transition: 0.2s; font-size: 0.95rem; cursor: pointer; border: none; width: 100%; }
+        .btn-book { background-color: #3498db; } .btn-sheets { background-color: #27ae60; } .btn-video { background-color: #e74c3c; }
         .res-btn:hover { opacity: 0.9; transform: scale(1.02); }
-
-        /* 4. استايل الستارة المنسدلة العام */
-        .resource-accordion {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .resource-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            display: flex;
-            flex-direction: column;
-            background: var(--white);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 0 0 12px 12px;
-        }
-
-        .sub-item {
-            padding: 10px;
-            text-decoration: none;
-            color: var(--primary);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-
+        .resource-accordion { display: flex; flex-direction: column; gap: 5px; border-radius: 12px; overflow: hidden; }
+        .resource-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; display: flex; flex-direction: column; background: var(--white); border: 1px solid rgba(0,0,0,0.05); border-radius: 0 0 12px 12px; }
+        .sub-item { padding: 10px; text-decoration: none; color: var(--primary); border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .sub-item:hover { background: rgba(0,0,0,0.03); }
-
-        .arrow {
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            display: inline-block;
-            padding: 3px;
-            transition: 0.3s;
-            transform: rotate(45deg);
-            margin-right: 10px;
-        }
-
+        .arrow { border: solid white; border-width: 0 2px 2px 0; display: inline-block; padding: 3px; transition: 0.3s; transform: rotate(45deg); margin-right: 10px; }
         .expanded .arrow { transform: rotate(-135deg); }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .empty-state { grid-column: 1 / -1; background: var(--white); border: 1px dashed var(--secondary); border-radius: 20px; padding: 35px 20px; text-align: center; color: var(--text-muted); box-shadow: 0 10px 25px rgba(0,0,0,0.04); }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
-
     <header>
-        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+        <a href="index.html" class="back-btn">العودة للرئيسية</a>
         <h1>المكتبة الرقمية المركزية</h1>
         <p>جميع المصادر الدراسية في مكان واحد</p>
     </header>
-
-    <div class="search-container">
-        <input type="text" id="searchBar" placeholder="ابحث عن مادة معينة (مثلاً: رياضة 1)..." onkeyup="filterSubjects()">
-    </div>
-
-    <div class="library-grid" id="libraryGrid">
-        <p id="loadingMsg">جاري تحميل المصادر...</p>
-    </div>
-
-    <footer>
-        تحديث لحظي من قاعدة بيانات القسم العام &copy; 2026
-    </footer>
-
+    <div class="search-container"><input type="text" id="searchBar" placeholder="ابحث عن مادة معينة (مثلاً: رياضة 1)..." onkeyup="filterSubjects()"></div>
+    <div class="library-grid" id="libraryGrid"><p id="loadingMsg">جارٍ تحميل المصادر...</p></div>
+    <footer>تحديث لحظي من قاعدة بيانات القسم العام &copy; 2026</footer>
     <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQbWh8v7WLlBzN-xNa6k0PAMu72PRn7sh8FBEB8HiANHka6jHlUaYYjqJRM3DSc7ShdbLL99xz-TGBT/pub?output=csv'; 
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQbWh8v7WLlBzN-xNa6k0PAMu72PRn7sh8FBEB8HiANHka6jHlUaYYjqJRM3DSc7ShdbLL99xz-TGBT/pub?output=csv';
         let allSubjects = [];
-
         async function fetchLibraryData() {
             try {
                 const response = await fetch(CSV_URL);
                 const data = await response.text();
-                const rows = data.split('\n').slice(1); 
+                const rows = data.split('\n').slice(1);
                 allSubjects = rows.map(row => {
                     const columns = row.split(',');
-                    return {
-                        name: columns[0]?.trim(),
-                        book: columns[1]?.trim(),
-                        sheets: columns[2]?.trim(),
-                        video: columns[3]?.trim()
-                    };
+                    return { name: columns[0]?.trim(), book: columns[1]?.trim(), sheets: columns[2]?.trim(), video: columns[3]?.trim() };
                 }).filter(s => s.name);
                 renderCards(allSubjects);
             } catch (error) {
-                console.error("خطأ في جلب البيانات:", error);
-                document.getElementById('loadingMsg').innerText = "فشل تحميل البيانات.";
+                console.error('خطأ في جلب البيانات:', error);
+                document.getElementById('loadingMsg').innerText = 'فشل تحميل البيانات.';
             }
         }
-
-        // دالة موحدة لإنشاء الأزرار أو الستائر لجميع الأقسام
         function createSectionHTML(dataField, title, btnClass, icon) {
             if (!dataField || dataField.length < 5) return '';
-            
             const links = dataField.split('|');
             if (links.length > 1) {
-                return `
-                    <div class="resource-accordion">
-                        <button class="res-btn ${btnClass}" onclick="toggleAccordion(this)">
-                            ${icon} ${title} (${links.length}) <span class="arrow"></span>
-                        </button>
-                        <div class="resource-list">
-                            ${links.map((link, index) => `
-                                <a href="${link.trim()}" target="_blank" class="sub-item">${icon} الجزء ${index + 1}</a>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
+                return `<div class="resource-accordion"><button class="res-btn ${btnClass}" onclick="toggleAccordion(this)">${icon} ${title} (${links.length}) <span class="arrow"></span></button><div class="resource-list">${links.map((link, index) => `<a href="${link.trim()}" target="_blank" class="sub-item">${icon} الجزء ${index + 1}</a>`).join('')}</div></div>`;
             }
             return `<a href="${dataField}" target="_blank" class="res-btn ${btnClass}">${icon} ${title}</a>`;
         }
-
         function renderCards(data) {
             const container = document.getElementById('libraryGrid');
             container.innerHTML = '';
-
+            if (!data.length) {
+                container.innerHTML = `<div class="empty-state"><h3 style="margin-top:0; color: var(--primary);">لا توجد نتائج</h3><p style="margin-bottom:0;">جرّب كتابة اسم المادة بشكل مختلف أو امسح البحث لعرض جميع المواد.</p></div>`;
+                return;
+            }
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'lib-card';
-                
-                const bookHTML = createSectionHTML(item.book, "كتاب المادة", "btn-book", "📘");
-                const sheetsHTML = createSectionHTML(item.sheets, "الشيتات", "btn-sheets", "📝");
-                const videoHTML = createSectionHTML(item.video, "شرح فيديو", "btn-video", "🎥");
-
-                card.innerHTML = `
-                    <h3>${item.name}</h3>
-                    <div class="resource-links">
-                        ${bookHTML}
-                        ${sheetsHTML}
-                        ${videoHTML}
-                    </div>
-                `;
+                const bookHTML = createSectionHTML(item.book, 'كتاب المادة', 'btn-book', '📘');
+                const sheetsHTML = createSectionHTML(item.sheets, 'الشيتات', 'btn-sheets', '📄');
+                const videoHTML = createSectionHTML(item.video, 'شرح فيديو', 'btn-video', '🎥');
+                card.innerHTML = `<h3>${item.name}</h3><div class="resource-links">${bookHTML}${sheetsHTML}${videoHTML}</div>`;
                 container.appendChild(card);
             });
         }
-
-        // وظيفة فتح وإغلاق الستارة لجميع الأقسام
         function toggleAccordion(btn) {
             const container = btn.parentElement;
             const list = container.querySelector('.resource-list');
             container.classList.toggle('expanded');
-            
-            if (container.classList.contains('expanded')) {
-                list.style.maxHeight = list.scrollHeight + "px";
-            } else {
-                list.style.maxHeight = "0";
-            }
+            if (container.classList.contains('expanded')) list.style.maxHeight = list.scrollHeight + 'px';
+            else list.style.maxHeight = '0';
         }
-
         function filterSubjects() {
             const term = document.getElementById('searchBar').value.toLowerCase();
             const filtered = allSubjects.filter(s => s.name.toLowerCase().includes(term));
             renderCards(filtered);
         }
-
         function applySavedTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
-
-        window.onload = () => {
-            applySavedTheme();
-            fetchLibraryData();
-        };
+        window.onload = () => { applySavedTheme(); fetchLibraryData(); };
     </script>
 </body>
 </html>
