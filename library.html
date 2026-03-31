@@ -137,26 +137,27 @@
 
         .res-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* 4. استايل الستارة (Dropdown) الجديد */
-        .sheets-accordion {
+        /* 4. استايل الستارة المنسدلة العام */
+        .resource-accordion {
             display: flex;
             flex-direction: column;
             gap: 5px;
-            background: rgba(39, 174, 96, 0.1);
             border-radius: 12px;
             overflow: hidden;
         }
 
-        .sheets-list {
+        .resource-list {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
             display: flex;
             flex-direction: column;
             background: var(--white);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 12px 12px;
         }
 
-        .sheet-item {
+        .sub-item {
             padding: 10px;
             text-decoration: none;
             color: var(--primary);
@@ -165,22 +166,22 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: 0.2s;
         }
 
-        .sheet-item:hover { background: rgba(39, 174, 96, 0.05); }
+        .sub-item:hover { background: rgba(0,0,0,0.03); }
 
-        /* سهم الستارة */
         .arrow {
             border: solid white;
             border-width: 0 2px 2px 0;
             display: inline-block;
             padding: 3px;
             transition: 0.3s;
-            transform: rotate(45deg); /* سهم لأسفل */
+            transform: rotate(45deg);
             margin-right: 10px;
         }
 
-        .expanded .arrow { transform: rotate(-135deg); } /* سهم لأعلى */
+        .expanded .arrow { transform: rotate(-135deg); }
 
         footer {
             text-align: center;
@@ -218,7 +219,6 @@
             try {
                 const response = await fetch(CSV_URL);
                 const data = await response.text();
-                
                 const rows = data.split('\n').slice(1); 
                 allSubjects = rows.map(row => {
                     const columns = row.split(',');
@@ -229,12 +229,33 @@
                         video: columns[3]?.trim()
                     };
                 }).filter(s => s.name);
-
                 renderCards(allSubjects);
             } catch (error) {
                 console.error("خطأ في جلب البيانات:", error);
                 document.getElementById('loadingMsg').innerText = "فشل تحميل البيانات.";
             }
+        }
+
+        // دالة موحدة لإنشاء الأزرار أو الستائر لجميع الأقسام
+        function createSectionHTML(dataField, title, btnClass, icon) {
+            if (!dataField || dataField.length < 5) return '';
+            
+            const links = dataField.split('|');
+            if (links.length > 1) {
+                return `
+                    <div class="resource-accordion">
+                        <button class="res-btn ${btnClass}" onclick="toggleAccordion(this)">
+                            ${icon} ${title} (${links.length}) <span class="arrow"></span>
+                        </button>
+                        <div class="resource-list">
+                            ${links.map((link, index) => `
+                                <a href="${link.trim()}" target="_blank" class="sub-item">${icon} الجزء ${index + 1}</a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            return `<a href="${dataField}" target="_blank" class="res-btn ${btnClass}">${icon} ${title}</a>`;
         }
 
         function renderCards(data) {
@@ -245,34 +266,9 @@
                 const card = document.createElement('div');
                 card.className = 'lib-card';
                 
-                // منطق الكتاب والفيديو (كما هو)
-                const bookHTML = item.book && item.book.length > 5 ? `<a href="${item.book}" target="_blank" class="res-btn btn-book">📘 كتاب المادة</a>` : '';
-                const videoHTML = item.video && item.video.length > 5 ? `<a href="${item.video}" target="_blank" class="res-btn btn-video">🎥 شرح فيديو</a>` : '';
-
-                // --- منطق الستارة للشيتات ---
-                let sheetsHTML = '';
-                if (item.sheets && item.sheets.length > 5) {
-                    const links = item.sheets.split('|'); // نستخدم علامة | للفصل بين الروابط لضمان عدم تعارض الروابط
-                    
-                    if (links.length > 1) {
-                        // حالة وجود أكثر من شيت (نصنع الستارة)
-                        sheetsHTML = `
-                            <div class="sheets-accordion">
-                                <button class="res-btn btn-sheets" onclick="toggleSheets(this)">
-                                    📝 عرض الشيتات (${links.length}) <span class="arrow"></span>
-                                </button>
-                                <div class="sheets-list">
-                                    ${links.map((link, index) => `
-                                        <a href="${link.trim()}" target="_blank" class="sheet-item">📄 الشيت رقم ${index + 1}</a>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        // حالة شيت واحد فقط
-                        sheetsHTML = `<a href="${item.sheets}" target="_blank" class="res-btn btn-sheets">📝 الشيتات</a>`;
-                    }
-                }
+                const bookHTML = createSectionHTML(item.book, "كتاب المادة", "btn-book", "📘");
+                const sheetsHTML = createSectionHTML(item.sheets, "الشيتات", "btn-sheets", "📝");
+                const videoHTML = createSectionHTML(item.video, "شرح فيديو", "btn-video", "🎥");
 
                 card.innerHTML = `
                     <h3>${item.name}</h3>
@@ -286,11 +282,10 @@
             });
         }
 
-        // وظيفة فتح وإغلاق الستارة
-        function toggleSheets(btn) {
+        // وظيفة فتح وإغلاق الستارة لجميع الأقسام
+        function toggleAccordion(btn) {
             const container = btn.parentElement;
-            const list = container.querySelector('.sheets-list');
-            
+            const list = container.querySelector('.resource-list');
             container.classList.toggle('expanded');
             
             if (container.classList.contains('expanded')) {
