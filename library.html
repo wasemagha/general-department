@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة الرقمية | قسم العام</title>
+    <style>
+        /* 1. المتغيرات والألوان (نفس الصفحة الرئيسية) */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #f39c12;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --text-muted: #7f8c8d;
+            --header-gradient: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg: #121212;
+            --white: #1e1e1e;
+            --primary: #ecf0f1;
+            --text-muted: #bdc3c7;
+            --header-gradient: linear-gradient(135deg, #000000 0%, #1a252f 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            color: var(--primary);
+            transition: 0.3s;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* 2. شريط البحث */
+        .search-container {
+            max-width: 600px;
+            margin: -25px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        #searchBar {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+            outline: none;
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* 3. شبكة المكتبة */
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 25px;
+        }
+
+        .lib-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .lib-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+
+        .lib-card h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.4rem;
+        }
+
+        .resource-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .res-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .btn-book { background-color: #3498db; }
+        .btn-sheets { background-color: #27ae60; }
+        .btn-video { background-color: #e74c3c; }
+
+        .res-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+        /* إخفاء الزر إذا لم يتوفر رابط */
+        .hidden { display: none; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+        <h1>المكتبة الرقمية المركزية</h1>
+        <p>جميع المصادر الدراسية في مكان واحد</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="ابحث عن مادة معينة (مثلاً: رياضة 1)..." onkeyup="filterSubjects()">
+    </div>
+
+    <div class="library-grid" id="libraryGrid">
+        <p id="loadingMsg">جاري تحميل المصادر...</p>
+    </div>
+
+    <footer>
+        تحديث لحظي من قاعدة بيانات القسم العام &copy; 2026
+    </footer>
+
+    <script>
+        // 1. إعدادات جلب البيانات
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQbWh8v7WLlBzN-xNa6k0PAMu72PRn7sh8FBEB8HiANHka6jHlUaYYjqJRM3DSc7ShdbLL99xz-TGBT/pub?output=csv'; 
+        let allSubjects = [];
+
+        // 2. دالة جلب البيانات من Google Sheets
+        async function fetchLibraryData() {
+            try {
+                const response = await fetch(CSV_URL);
+                const data = await response.text();
+                
+                // تحويل نص CSV إلى مصفوفة كائنات
+                const rows = data.split('\n').slice(1); // تجاهل سطر العناوين
+                allSubjects = rows.map(row => {
+                    const columns = row.split(',');
+                    return {
+                        name: columns[0]?.trim(),
+                        book: columns[1]?.trim(),
+                        sheets: columns[2]?.trim(),
+                        video: columns[3]?.trim()
+                    };
+                }).filter(s => s.name); // تجاهل السطور الفارغة
+
+                renderCards(allSubjects);
+            } catch (error) {
+                console.error("خطأ في جلب البيانات:", error);
+                document.getElementById('loadingMsg').innerText = "فشل تحميل البيانات. تأكد من رابط الـ CSV وإعدادات النشر.";
+            }
+        }
+
+        // 3. دالة إنشاء البطاقات
+        function renderCards(data) {
+            const container = document.getElementById('libraryGrid');
+            container.innerHTML = '';
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'lib-card';
+                
+                // المنطق: إخفاء الزر إذا كان الرابط فارغاً أو يحتوي على كلمة "empty"
+                const bookHTML = item.book && item.book.length > 5 ? `<a href="${item.book}" target="_blank" class="res-btn btn-book">📘 كتاب المادة</a>` : '';
+                const sheetsHTML = item.sheets && item.sheets.length > 5 ? `<a href="${item.sheets}" target="_blank" class="res-btn btn-sheets">📝 الشيتات</a>` : '';
+                const videoHTML = item.video && item.video.length > 5 ? `<a href="${item.video}" target="_blank" class="res-btn btn-video">🎥 شرح فيديو</a>` : '';
+
+                card.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <div class="resource-links">
+                        ${bookHTML}
+                        ${sheetsHTML}
+                        ${videoHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 4. دالة البحث والتصفية
+        function filterSubjects() {
+            const term = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = allSubjects.filter(s => s.name.toLowerCase().includes(term));
+            renderCards(filtered);
+        }
+
+        // 5. مزامنة الوضع الليلي مع الصفحة الرئيسية
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        // تشغيل الوظائف عند التحميل
+        window.onload = () => {
+            applySavedTheme();
+            fetchLibraryData();
+        };
+    </script>
+</body>
+</html>
