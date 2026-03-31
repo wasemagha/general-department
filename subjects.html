@@ -65,7 +65,7 @@
         .container { 
             position: relative; 
             width: 1400px; 
-            height: 2300px; 
+            height: 2600px; /* تم زيادة الطول لاستيعاب الإزاحة */
             margin: 30px auto; 
             flex-shrink: 0;
             transition: 0.3s;
@@ -143,55 +143,16 @@
             color: var(--secondary); font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: bold; direction: ltr;
         }
 
-        /* --- إعدادات الطباعة المحدثة لإظهار الخطوط والـ SVG --- */
         @media print {
-            @page {
-                size: A4 landscape;
-                margin: 0;
-            }
-            body { 
-                min-width: 1400px !important; 
-                background: white !important; 
-                direction: rtl !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .nav-bar, .theme-btn, .pdf-btn, .home-btn, header p, footer, .modal { 
-                display: none !important; 
-            }
-            header { 
-                padding: 15px 0 !important; 
-                background: #1a252f !important; 
-                width: 1400px !important;
-            }
-            .container { 
-                margin: 0 !important;
-                width: 1400px !important;
-                position: relative !important;
-                zoom: 0.63; 
-                transform: none !important;
-            }
-            /* إجبار المتصفح على رسم الخطوط اليدوية والـ SVG */
-            .line-h, .line-v { 
-                background: #aaa !important; 
-                display: block !important;
-                visibility: visible !important;
-            }
-            svg.connectors { 
-                display: block !important; 
-                visibility: visible !important;
-                width: 100% !important;
-                height: 100% !important;
-            }
-            svg.connectors path, svg.connectors line {
-                stroke: #aaa !important;
-                stroke-width: 2px !important;
-            }
-            .card { 
-                border: 1px solid #aaa !important; 
-                box-shadow: none !important; 
-                background-color: white !important;
-            }
+            @page { size: A4 landscape; margin: 0; }
+            body { min-width: 1400px !important; background: white !important; direction: rtl !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .nav-bar, .theme-btn, .pdf-btn, .home-btn, header p, footer, .modal { display: none !important; }
+            header { padding: 15px 0 !important; background: #1a252f !important; width: 1400px !important; }
+            .container { margin: 0 !important; width: 1400px !important; position: relative !important; zoom: 0.63; transform: none !important; }
+            .line-h, .line-v { background: #aaa !important; display: block !important; visibility: visible !important; }
+            svg.connectors { display: block !important; visibility: visible !important; width: 100% !important; height: 100% !important; }
+            svg.connectors path, svg.connectors line { stroke: #aaa !important; stroke-width: 2px !important; }
+            .card { border: 1px solid #aaa !important; box-shadow: none !important; background-color: white !important; }
         }
     </style>
 </head>
@@ -218,9 +179,10 @@
                 </marker>
             </defs>
             <path d="M 385 250 Q 385 100 500 100 L 960 100" stroke="#bdc3c7" stroke-width="2" fill="none" marker-start="url(#arrowhead)"/>
-            <line x1="1045" y1="1750" x2="1045" y2="1875" stroke="#bdc3c7" stroke-width="2" />
-            <line x1="1045" y1="2050" x2="1045" y2="1875" stroke="#bdc3c7" stroke-width="2" />
-            <line x1="1045" y1="1875" x2="915" y2="1875" stroke="#bdc3c7" stroke-width="2" marker-end="url(#arrowhead)" />
+            
+            <line x1="1045" y1="1900" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" />
+            <line x1="1045" y1="2300" x2="1045" y2="2075" stroke="#bdc3c7" stroke-width="2" />
+            <line x1="1045" y1="2075" x2="915" y2="2075" stroke="#bdc3c7" stroke-width="2" marker-end="url(#arrowhead)" />
         </svg>
 
         <div class="card" style="top: 250px; right: 50px;" data-name="رياضة 1" data-code="GS101" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS101</span><span class="name">رياضة 1</span></div>
@@ -246,26 +208,31 @@
         <div class="card" style="top: 850px; right: 270px;" data-name="كيمياء معمل" data-code="L115-GS" data-units="1 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">L115-GS</span><span class="name">كيمياء معمل</span></div>
 
         <div class="card" style="top: 1250px; right: 50px;" data-name="فيزياء 1" data-code="GS111" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS111</span><span class="name">فيزياء 1</span></div>
+        
+        <div class="line-v" style="top: 1350px; right: 134px; height: 100px;"></div>
+        <div class="card" style="top: 1450px; right: 50px;" data-name="خواص مواد" data-code="GE133" data-units="3 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE133</span><span class="name">خواص مواد</span></div>
+
         <div class="line-h" style="top: 1300px; right: 220px; width: 50px;"></div>
         <div class="card" style="top: 1250px; right: 270px;" data-name="فيزياء 2" data-code="GS112" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS112</span><span class="name">فيزياء 2</span></div>
         <div class="line-v" style="top: 1150px; right: 354px; height: 100px;"></div>
         <div class="card" style="top: 1050px; right: 270px;" data-name="أسس هندسة كهربائية" data-code="GE280" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GE280</span><span class="name">أسس هندسة كهربائية</span></div>
         <div class="line-h" style="top: 1300px; right: 440px; width: 50px;"></div>
         <div class="card" style="top: 1250px; right: 490px;" data-name="فيزياء معمل" data-code="L112-GS" data-units="1 وحدة"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">L112-GS</span><span class="name">فيزياء معمل</span></div>
-        <div class="card" style="top: 1450px; right: 50px;" data-name="رسم هندسي" data-code="GS126" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS126</span><span class="name">رسم هندسي</span></div>
 
-        <div class="card" style="top: 1650px; right: 50px;" data-name="لغة إنجليزية 1" data-code="GH141" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH141</span><span class="name">لغة إنجليزية 1</span></div>
-        <div class="line-h" style="top: 1700px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 1650px; right: 270px;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div>
-        <div class="line-h" style="top: 1700px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 1650px; right: 490px;" data-name="لغة إنجليزية 3" data-code="GH241" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH241</span><span class="name">لغة إنجليزية 3</span></div>
-        <div class="card" style="top: 1825px; right: 490px;" data-name="كتابة تقارير" data-code="GH450" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
+        <div class="card" style="top: 1650px; right: 50px;" data-name="رسم هندسي" data-code="GS126" data-units="3 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GS126</span><span class="name">رسم هندسي</span></div>
 
-        <div class="card" style="top: 2050px; right: 50px;" data-name="لغة عربية 1" data-code="GH150" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH150</span><span class="name">لغة عربية 1</span></div>
-        <div class="line-h" style="top: 2100px; right: 220px; width: 50px;"></div>
-        <div class="card" style="top: 2050px; right: 270px;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div>
-        <div class="line-h" style="top: 2100px; right: 440px; width: 50px;"></div>
-        <div class="card" style="top: 2050px; right: 490px;" data-name="ثقافة وطنية" data-code="GH299" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH299</span><span class="name">ثقافة وطنية</span></div>
+        <div class="card" style="top: 1850px; right: 50px;" data-name="لغة إنجليزية 1" data-code="GH141" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH141</span><span class="name">لغة إنجليزية 1</span></div>
+        <div class="line-h" style="top: 1900px; right: 220px; width: 50px;"></div>
+        <div class="card" style="top: 1850px; right: 270px;" data-name="لغة إنجليزية 2" data-code="GH142" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH142</span><span class="name">لغة إنجليزية 2</span></div>
+        <div class="line-h" style="top: 1900px; right: 440px; width: 50px;"></div>
+        <div class="card" style="top: 1850px; right: 490px;" data-name="لغة إنجليزية 3" data-code="GH241" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH241</span><span class="name">لغة إنجليزية 3</span></div>
+        <div class="card" style="top: 2025px; right: 490px;" data-name="كتابة تقارير" data-code="GH450" data-units="1 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH450</span><span class="name">كتابة التقارير</span></div>
+
+        <div class="card" style="top: 2250px; right: 50px;" data-name="لغة عربية 1" data-code="GH150" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH150</span><span class="name">لغة عربية 1</span></div>
+        <div class="line-h" style="top: 2300px; right: 220px; width: 50px;"></div>
+        <div class="card" style="top: 2250px; right: 270px;" data-name="لغة عربية 2" data-code="GH151" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH151</span><span class="name">لغة عربية 2</span></div>
+        <div class="line-h" style="top: 2300px; right: 440px; width: 50px;"></div>
+        <div class="card" style="top: 2250px; right: 490px;" data-name="ثقافة وطنية" data-code="GH299" data-units="2 وحدات"><div class="status-icon check">✅</div><div class="status-icon lock">🔒</div><span class="code">GH299</span><span class="name">ثقافة وطنية</span></div>
     </div>
 
     <div id="myModal" class="modal">
@@ -285,7 +252,7 @@
     </footer>
 
     <script>
-        // ... (نفس السكربت السابق بدون تغيير)
+        // دمج تبعيات المادة الجديدة في القائمة الأصلية
         const dependencies = {
             'رياضة 1': { req: [], next: ['رياضة 2'] },
             'رياضة 2': { req: ['رياضة 1'], next: ['رياضة 3', 'برمجة حاسوب', 'الإحصاء والاحتمالات'] },
@@ -298,7 +265,8 @@
             'ديناميكا': { req: ['استاتيكا'], next: [] },
             'كيمياء عامة': { req: [], next: ['كيمياء معمل'] },
             'كيمياء معمل': { req: ['كيمياء عامة'], next: [] },
-            'فيزياء 1': { req: [], next: ['فيزياء 2'] },
+            'فيزياء 1': { req: [], next: ['فيزياء 2', 'خواص مواد'] },
+            'خواص مواد': { req: ['فيزياء 1'], next: [] },
             'فيزياء 2': { req: ['فيزياء 1'], next: ['فيزياء معمل', 'أسس هندسة كهربائية'] },
             'أسس هندسة كهربائية': { req: ['فيزياء 2'], next: [] },
             'فيزياء معمل': { req: ['فيزياء 2'], next: [] },
