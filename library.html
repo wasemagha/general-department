@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المكتبة الرقمية | قسم العام</title>
     <style>
-        /* 1. المتغيرات والألوان (نفس الصفحة الرئيسية) */
+        /* 1. المتغيرات والألوان الأصيلة */
         :root {
             --primary: #2c3e50;
             --secondary: #f39c12;
@@ -126,6 +126,9 @@
             color: white;
             transition: 0.2s;
             font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            width: 100%;
         }
 
         .btn-book { background-color: #3498db; }
@@ -134,8 +137,50 @@
 
         .res-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* إخفاء الزر إذا لم يتوفر رابط */
-        .hidden { display: none; }
+        /* 4. استايل الستارة (Dropdown) الجديد */
+        .sheets-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sheets-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+        }
+
+        .sheet-item {
+            padding: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sheet-item:hover { background: rgba(39, 174, 96, 0.05); }
+
+        /* سهم الستارة */
+        .arrow {
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transition: 0.3s;
+            transform: rotate(45deg); /* سهم لأسفل */
+            margin-right: 10px;
+        }
+
+        .expanded .arrow { transform: rotate(-135deg); } /* سهم لأعلى */
 
         footer {
             text-align: center;
@@ -166,18 +211,15 @@
     </footer>
 
     <script>
-        // 1. إعدادات جلب البيانات
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQbWh8v7WLlBzN-xNa6k0PAMu72PRn7sh8FBEB8HiANHka6jHlUaYYjqJRM3DSc7ShdbLL99xz-TGBT/pub?output=csv'; 
         let allSubjects = [];
 
-        // 2. دالة جلب البيانات من Google Sheets
         async function fetchLibraryData() {
             try {
                 const response = await fetch(CSV_URL);
                 const data = await response.text();
                 
-                // تحويل نص CSV إلى مصفوفة كائنات
-                const rows = data.split('\n').slice(1); // تجاهل سطر العناوين
+                const rows = data.split('\n').slice(1); 
                 allSubjects = rows.map(row => {
                     const columns = row.split(',');
                     return {
@@ -186,16 +228,15 @@
                         sheets: columns[2]?.trim(),
                         video: columns[3]?.trim()
                     };
-                }).filter(s => s.name); // تجاهل السطور الفارغة
+                }).filter(s => s.name);
 
                 renderCards(allSubjects);
             } catch (error) {
                 console.error("خطأ في جلب البيانات:", error);
-                document.getElementById('loadingMsg').innerText = "فشل تحميل البيانات. تأكد من رابط الـ CSV وإعدادات النشر.";
+                document.getElementById('loadingMsg').innerText = "فشل تحميل البيانات.";
             }
         }
 
-        // 3. دالة إنشاء البطاقات
         function renderCards(data) {
             const container = document.getElementById('libraryGrid');
             container.innerHTML = '';
@@ -204,10 +245,34 @@
                 const card = document.createElement('div');
                 card.className = 'lib-card';
                 
-                // المنطق: إخفاء الزر إذا كان الرابط فارغاً أو يحتوي على كلمة "empty"
+                // منطق الكتاب والفيديو (كما هو)
                 const bookHTML = item.book && item.book.length > 5 ? `<a href="${item.book}" target="_blank" class="res-btn btn-book">📘 كتاب المادة</a>` : '';
-                const sheetsHTML = item.sheets && item.sheets.length > 5 ? `<a href="${item.sheets}" target="_blank" class="res-btn btn-sheets">📝 الشيتات</a>` : '';
                 const videoHTML = item.video && item.video.length > 5 ? `<a href="${item.video}" target="_blank" class="res-btn btn-video">🎥 شرح فيديو</a>` : '';
+
+                // --- منطق الستارة للشيتات ---
+                let sheetsHTML = '';
+                if (item.sheets && item.sheets.length > 5) {
+                    const links = item.sheets.split('|'); // نستخدم علامة | للفصل بين الروابط لضمان عدم تعارض الروابط
+                    
+                    if (links.length > 1) {
+                        // حالة وجود أكثر من شيت (نصنع الستارة)
+                        sheetsHTML = `
+                            <div class="sheets-accordion">
+                                <button class="res-btn btn-sheets" onclick="toggleSheets(this)">
+                                    📝 عرض الشيتات (${links.length}) <span class="arrow"></span>
+                                </button>
+                                <div class="sheets-list">
+                                    ${links.map((link, index) => `
+                                        <a href="${link.trim()}" target="_blank" class="sheet-item">📄 الشيت رقم ${index + 1}</a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // حالة شيت واحد فقط
+                        sheetsHTML = `<a href="${item.sheets}" target="_blank" class="res-btn btn-sheets">📝 الشيتات</a>`;
+                    }
+                }
 
                 card.innerHTML = `
                     <h3>${item.name}</h3>
@@ -221,20 +286,31 @@
             });
         }
 
-        // 4. دالة البحث والتصفية
+        // وظيفة فتح وإغلاق الستارة
+        function toggleSheets(btn) {
+            const container = btn.parentElement;
+            const list = container.querySelector('.sheets-list');
+            
+            container.classList.toggle('expanded');
+            
+            if (container.classList.contains('expanded')) {
+                list.style.maxHeight = list.scrollHeight + "px";
+            } else {
+                list.style.maxHeight = "0";
+            }
+        }
+
         function filterSubjects() {
             const term = document.getElementById('searchBar').value.toLowerCase();
             const filtered = allSubjects.filter(s => s.name.toLowerCase().includes(term));
             renderCards(filtered);
         }
 
-        // 5. مزامنة الوضع الليلي مع الصفحة الرئيسية
         function applySavedTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
 
-        // تشغيل الوظائف عند التحميل
         window.onload = () => {
             applySavedTheme();
             fetchLibraryData();
