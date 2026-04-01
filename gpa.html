@@ -3,67 +3,570 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200, initial-scale=0.4">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة المعدل | كلية الهندسة - جامعة الزاوية</title>
     <style>
-        :root { --primary: #2c3e50; --secondary: #f39c12; --bg: #f4f7f6; --white: #ffffff; --danger: #e74c3c; --success: #27ae60; --muted: #7f8c8d; --card-border: #eee; --input-bg: #ffffff; --text-color: #333; --panel-bg: #f8fafc; --table-head: #f1f5f9; }
-        [data-theme="dark"] { --bg: #121212; --white: #1e1e1e; --primary: #ecf0f1; --text-color: #e0e0e0; --card-border: #333; --input-bg: #2d2d2d; --panel-bg: #1a1a1a; --table-head: #252525; --muted: #bdc3c7; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 40px; color: var(--text-color); transition: 0.3s; }
-        .container { max-width: 1250px; margin: auto; background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
-        header { border-bottom: 3px solid var(--secondary); padding-bottom: 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .back-link { text-decoration: none; color: var(--primary); font-weight: bold; background: #ebedef; padding: 12px 25px; border-radius: 15px; }
-        .header-btns { display: flex; gap: 10px; align-items: center; }
-        .theme-btn { padding: 12px 20px; background: var(--primary); color: var(--white); border: 2px solid var(--secondary); border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .controls-panel { background: var(--panel-bg); padding: 25px; border-radius: 20px; margin-bottom: 30px; display: flex; gap: 40px; border: 1px solid var(--card-border); align-items: center; }
-        input[type="number"], select { padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-weight: bold; background-color: var(--input-bg); color: var(--text-color); }
-        input[type="number"] { width: 80px; text-align: center; }
-        .sem-section { margin-bottom: 40px; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; page-break-inside: avoid; }
-        .sem-head { background: var(--table-head); padding: 15px 25px; display: flex; justify-content: space-between; font-weight: bold; align-items: center; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: var(--panel-bg); padding: 15px; font-size: 0.85rem; border-bottom: 2px solid var(--card-border); color: var(--muted); }
-        td { padding: 12px; border-bottom: 1px solid var(--card-border); text-align: center; }
-        .grade-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; display: inline-block; min-width: 75px; }
+        :root {
+            --primary: #22313f;
+            --secondary: #f39c12;
+            --accent: #3498db;
+            --bg: #eef3f7;
+            --white: #ffffff;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --muted: #6f7f8e;
+            --card-border: #d9e2ea;
+            --input-bg: #fbfdff;
+            --text-color: #2b3743;
+            --panel-bg: #f8fbfd;
+            --table-head: #f2f6fa;
+            --hero-bg: linear-gradient(135deg, #1a252f 0%, #2d4356 55%, #3a5870 100%);
+            --shell-shadow: 0 20px 45px rgba(33, 52, 72, 0.12);
+            --soft-shadow: 0 10px 22px rgba(33, 52, 72, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f1318;
+            --white: #161c22;
+            --primary: #edf2f7;
+            --text-color: #edf2f7;
+            --card-border: #2d3640;
+            --input-bg: #1a222b;
+            --panel-bg: #141a20;
+            --table-head: #1c242d;
+            --muted: #aab5c1;
+            --hero-bg: linear-gradient(135deg, #050607 0%, #11161c 55%, #1d2732 100%);
+            --shell-shadow: 0 24px 50px rgba(0,0,0,0.34);
+            --soft-shadow: 0 12px 28px rgba(0,0,0,0.24);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(243, 156, 18, 0.10), transparent 26%),
+                radial-gradient(circle at top left, rgba(52, 152, 219, 0.08), transparent 24%),
+                var(--bg);
+            margin: 0;
+            padding: 22px;
+            color: var(--text-color);
+            transition: 0.3s;
+        }
+
+        .page-wrap {
+            max-width: 1260px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: var(--hero-bg);
+            color: white;
+            border-radius: 28px;
+            padding: 26px 26px 22px;
+            box-shadow: var(--shell-shadow);
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 290px;
+            height: 290px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(243,156,18,0.18), transparent 70%);
+            top: -130px;
+            left: -90px;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 68%);
+            bottom: -190px;
+            right: -70px;
+            pointer-events: none;
+        }
+
+        .hero-top,
+        .header-bar {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.14);
+            color: #fff;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            backdrop-filter: blur(6px);
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            margin: 10px 0 0;
+            color: rgba(255,255,255,0.82);
+            font-size: 0.98rem;
+            max-width: 760px;
+        }
+
+        .header-bar {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .back-link,
+        .theme-btn,
+        .print-btn,
+        .add-btn {
+            border: none;
+            padding: 10px 15px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            color: white;
+            box-shadow: var(--soft-shadow);
+            transition: transform 0.18s ease, filter 0.18s ease;
+        }
+
+        .back-link:hover,
+        .theme-btn:hover,
+        .print-btn:hover,
+        .add-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.03);
+        }
+
+        .back-link { background: linear-gradient(135deg, #34495e, #4b6278); }
+        .theme-btn { background: linear-gradient(135deg, #f39c12, #f7b347); }
+        .print-btn { background: linear-gradient(135deg, #239b56, #2ecc71); }
+        .add-btn { background: linear-gradient(135deg, #2e86c1, #3498db); }
+
+        .controls-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 220px 1fr 220px;
+            gap: 16px;
+            margin-bottom: 18px;
+            box-shadow: var(--shell-shadow);
+        }
+
+        .control-card,
+        .summary-card {
+            background: var(--white);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .control-card label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            font-weight: 700;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            outline: none;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(243,156,18,0.14);
+        }
+
+        .target-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .target-box input {
+            max-width: 120px;
+        }
+
+        .target-message {
+            font-weight: 800;
+            color: var(--muted);
+            min-height: 24px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .summary-card small {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .summary-card b {
+            display: block;
+            font-size: 1.7rem;
+            color: var(--primary);
+        }
+
+        .summary-card.highlight {
+            background: linear-gradient(135deg, rgba(243,156,18,0.12), rgba(243,156,18,0.04));
+            border-color: rgba(243,156,18,0.26);
+        }
+
+        .semesters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding-bottom: 110px;
+        }
+
+        .sem-section {
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            overflow: hidden;
+            page-break-inside: avoid;
+            background: var(--white);
+            box-shadow: var(--shell-shadow);
+        }
+
+        .sem-head {
+            background: var(--table-head);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            font-weight: 800;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .sem-title {
+            font-size: 1.02rem;
+            color: var(--primary);
+        }
+
+        .sem-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 8px 12px;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .sem-table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 880px;
+        }
+
+        th {
+            background: var(--panel-bg);
+            padding: 14px 12px;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--card-border);
+            color: var(--muted);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .subject-cell {
+            min-width: 260px;
+        }
+
+        .grade-badge {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: inline-block;
+            min-width: 82px;
+        }
+
         .grade-excel { background: #d4edda !important; color: #155724 !important; }
         .grade-vgood { background: #cce5ff !important; color: #004085 !important; }
         .grade-good { background: #fff3cd !important; color: #856404 !important; }
         .grade-pass { background: #e2e3e5 !important; color: #383d41 !important; }
         .grade-fail { background: #f8d7da !important; color: #721c24 !important; }
-        .re-btn { padding: 8px 18px; border-radius: 25px; border: 1px solid #ddd; background: var(--input-bg); color: var(--text-color); cursor: pointer; transition: 0.2s; }
-        .re-btn.active { background: var(--danger) !important; color: white !important; border-color: var(--danger); font-weight: bold; }
-        .floating-results { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #2c3e50; color: white; padding: 18px 60px; border-radius: 100px; display: flex; gap: 60px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 3px solid var(--secondary); z-index: 1000; }
-        #print-summary { display: none; margin-top: 30px; padding: 30px; border: 3px solid #2c3e50; border-radius: 20px; background: #fff; color: #000; }
-        @media print { .no-print, .floating-results, .back-link, .header-btns, button { display: none !important; } body { padding: 0; background: white; color: black; } .container { box-shadow: none; width: 100%; border: none; padding: 0; } #print-summary { display: block !important; } .sem-section { border: 1px solid #000; } }
+
+        .re-btn {
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--card-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 700;
+        }
+
+        .re-btn.active { background: var(--danger) !important; color: white !important; border-color: var(--danger); }
+
+        .row-action-btn {
+            border: none;
+            background: rgba(231, 76, 60, 0.10);
+            color: var(--danger);
+            border-radius: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .section-footer {
+            padding: 16px 20px 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.01), transparent);
+        }
+
+        .floating-results {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #1f3140, #304b61);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 24px;
+            display: flex;
+            gap: 26px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.34);
+            border: 2px solid rgba(243,156,18,0.45);
+            z-index: 1000;
+            min-width: min(920px, calc(100% - 24px));
+            justify-content: space-between;
+        }
+
+        .floating-results .metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .floating-results small {
+            display: block;
+            opacity: 0.72;
+            margin-bottom: 6px;
+        }
+
+        .floating-results b {
+            font-size: 1.45rem;
+        }
+
+        #print-summary {
+            display: none;
+            margin-top: 30px;
+            padding: 24px;
+            border: 2px solid #2c3e50;
+            border-radius: 20px;
+            background: #fff;
+            color: #000;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        @media (max-width: 980px) {
+            .controls-panel { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+            .floating-results {
+                position: static;
+                transform: none;
+                min-width: 100%;
+                flex-direction: column;
+                margin-top: 18px;
+            }
+            .semesters-list { padding-bottom: 0; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 14px; }
+            .hero { padding: 18px 16px 16px; border-radius: 22px; }
+            .hero h1 { font-size: 1.6rem; }
+            .header-bar { flex-direction: column; align-items: stretch; }
+            .header-bar > * { width: 100%; }
+            .summary-card b { font-size: 1.45rem; }
+            .sem-head { flex-direction: column; align-items: stretch; }
+        }
+
+        @media print {
+            @page { size: A4; margin: 10mm; }
+            body { padding: 0; background: white; color: black; }
+            .hero, .controls-panel, .summary-grid, .floating-results, .no-print { display: none !important; }
+            .page-wrap { max-width: 100%; width: 100% !important; }
+            #print-summary {
+                display: block !important;
+                width: 100% !important;
+                margin: 0 0 10px 0 !important;
+                padding: 14px !important;
+                border: 1.5px solid #000 !important;
+                border-radius: 14px !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+            #print-summary h2 {
+                margin: 0 0 6px 0 !important;
+                font-size: 20px !important;
+            }
+            #print-summary h4 {
+                margin: 0 0 10px 0 !important;
+                font-size: 13px !important;
+            }
+            #print-summary table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 0.95rem !important;
+            }
+            #print-summary td {
+                padding: 8px 6px !important;
+                vertical-align: middle !important;
+                word-break: break-word;
+            }
+            .sem-section {
+                box-shadow: none;
+                border: 1px solid #000;
+                margin-bottom: 10px;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            #semestersList {
+                page-break-before: always;
+                break-before: page;
+            }
+            .sem-table-wrap {
+                overflow: visible !important;
+            }
+            .sem-head { background: #eee !important; color: #000 !important; }
+            th { background: #f4f4f4 !important; color: #000 !important; }
+            td, th { border-color: #000 !important; color: #000 !important; }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <header>
-        <a href="index.html" class="back-link no-print">الرئيسية</a>
-        <h2 style="margin:0; color: var(--primary);">حاسبة التقديرات | شجرة المواد الرسمية</h2>
-        <div class="header-btns no-print">
-            <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">الوضع الليلي</button>
-            <button onclick="window.print()" style="padding:12px 25px; background:var(--secondary); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">طباعة</button>
+<div class="page-wrap">
+    <section class="hero">
+        <div class="hero-top">
+            <div class="hero-badge">شاهد تقدمك الأكاديمي بوضوح</div>
+            <h1>حاسبة المعدل الأكاديمي</h1>
+            <p>أدخل موادك ودرجاتك حسب الفصول الدراسية، وستحسب الصفحة المعدل العام والتقدير وعدد الوحدات المنجزة بشكل فوري وواضح.</p>
         </div>
-    </header>
+        <div class="header-bar">
+            <a href="index.html" class="back-link no-print">الرئيسية</a>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="theme-btn no-print" onclick="toggleTheme()" id="theme-btn">الوضع الليلي</button>
+                <button class="print-btn no-print" onclick="window.print()">طباعة</button>
+            </div>
+        </div>
+    </section>
+
     <div class="controls-panel no-print">
-        <div><label>عدد الفصول:</label><input type="number" id="semCount" min="1" max="10" value="1" onchange="initApp()"></div>
-        <div style="flex-grow:1"><label>المعدل المستهدف (%):</label><input type="number" id="targetGPA" value="80" oninput="calculate()"><span id="targetMsg" style="margin-right:15px; font-weight:bold;"></span></div>
+        <div class="control-card">
+            <label for="semCount">عدد الفصول</label>
+            <input type="number" id="semCount" min="1" max="10" value="1" onchange="initApp()">
+        </div>
+        <div class="control-card">
+            <label for="targetGPA">المعدل المستهدف</label>
+            <div class="target-box">
+                <input type="number" id="targetGPA" value="80" oninput="calculate()">
+                <span style="font-weight:800; color: var(--muted);">%</span>
+            </div>
+            <div class="target-message" id="targetMsg"></div>
+        </div>
+        <div class="summary-card highlight">
+            <small>حالة الهدف</small>
+            <b id="goalStatusText">جاهز للحساب</b>
+        </div>
     </div>
-    <div id="semestersList"></div>
+
+    <div class="summary-grid">
+        <div class="summary-card highlight">
+            <small>التراكمي العام</small>
+            <b id="f-gpa">0.00%</b>
+        </div>
+        <div class="summary-card">
+            <small>التقدير العام</small>
+            <b id="f-grade">-</b>
+        </div>
+        <div class="summary-card">
+            <small>إجمالي الوحدات المنجزة</small>
+            <b id="f-units">0</b>
+        </div>
+    </div>
+
+    <div id="semestersList" class="semesters-list"></div>
+
     <div id="print-summary">
         <h2 style="text-align: center;">تقرير المعدل الأكاديمي</h2>
         <h4 style="text-align: center;">كلية الهندسة - جامعة الزاوية</h4>
-        <table style="width: 100%; font-size: 1.3rem; text-align: right; margin-top: 20px; color: black;">
-            <tr><td><b>المعدل التراكمي:</b></td><td id="p-gpa" style="color: #f39c12; font-size: 1.8rem; font-weight: 900;">0.00%</td><td><b>التقدير العام:</b></td><td id="p-grade" style="font-weight: bold;">-</td></tr>
-            <tr><td><b>الوحدات المنجزة:</b></td><td id="p-units">0</td><td><b>التاريخ:</b></td><td>2026/03/28</td></tr>
+        <table style="width: 100%; font-size: 1.1rem; text-align: right; margin-top: 18px; color: black; border-collapse: collapse;">
+            <tr><td style="padding:10px;"><b>المعدل التراكمي:</b></td><td id="p-gpa" style="padding:10px; color: #f39c12; font-size: 1.5rem; font-weight: 900;">0.00%</td><td style="padding:10px;"><b>التقدير العام:</b></td><td id="p-grade" style="padding:10px; font-weight: bold;">-</td></tr>
+            <tr><td style="padding:10px;"><b>الوحدات المنجزة:</b></td><td id="p-units" style="padding:10px;">0</td><td style="padding:10px;"><b>التاريخ:</b></td><td style="padding:10px;">2026/04/01</td></tr>
         </table>
     </div>
-    <div class="floating-results no-print">
-        <div style="text-align: center;"><small style="opacity:0.7">التراكمي العام</small><br><b id="f-gpa" style="color:var(--secondary); font-size:1.6rem;">0.00%</b></div>
-        <div style="text-align: center;"><small style="opacity:0.7">التقدير العام</small><br><b id="f-grade">-</b></div>
-        <div style="text-align: center;"><small style="opacity:0.7">إجمالي الوحدات المنجزة</small><br><b id="f-units">0</b></div>
-    </div>
 </div>
+
+<div class="floating-results no-print">
+    <div class="metric"><small>التراكمي العام</small><b id="float-gpa">0.00%</b></div>
+    <div class="metric"><small>التقدير العام</small><b id="float-grade">-</b></div>
+    <div class="metric"><small>إجمالي الوحدات المنجزة</small><b id="float-units">0</b></div>
+</div>
+
 <script>
     function toggleTheme() {
         const body = document.documentElement;
@@ -73,6 +576,7 @@
         localStorage.setItem('theme', targetTheme);
         document.getElementById('theme-btn').innerText = targetTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي';
     }
+
     const subjectsData = [
         { name: "رياضة 1 (GS101)", hours: 3 }, { name: "رياضة 2 (GS102)", hours: 4 }, { name: "رياضة 3 (GS203)", hours: 3 }, { name: "رياضة 4 (GS204)", hours: 3 },
         { name: "برمجة حاسوب (GS200)", hours: 3 }, { name: "الإحصاء والاحتمالات (GS206)", hours: 3 }, { name: "التحليل العددي (GS309)", hours: 3 },
@@ -83,6 +587,7 @@
         { name: "لغة إنجليزية 3 (GH241)", hours: 2 }, { name: "كتابة التقارير (GH450)", hours: 2 }, { name: "لغة عربية 1 (GH150)", hours: 2 },
         { name: "لغة عربية 2 (GH151)", hours: 2 }, { name: "ثقافة وطنية (GH299)", hours: 2 }
     ];
+
     function getGradeInfo(score) {
         if (score >= 85) return { text: "ممتاز", class: "grade-excel" };
         if (score >= 75) return { text: "جيد جدًا", class: "grade-vgood" };
@@ -91,44 +596,112 @@
         if (score > 0) return { text: "ضعيف", class: "grade-fail" };
         return { text: "-", class: "" };
     }
+
     function initApp() {
         const count = parseInt(document.getElementById('semCount').value);
         const container = document.getElementById('semestersList');
         const currentSections = container.querySelectorAll('.sem-section').length;
+
         if (count > currentSections) {
             for (let i = currentSections + 1; i <= count; i++) {
-                const div = document.createElement('div');
-                div.className = 'sem-section';
-                div.innerHTML = `
-                    <div class="sem-head"><span>الفصل الدراسي ${i}</span><div style="display:flex; gap:20px; align-items:center;"><span id="sem-avg-${i}" style="font-weight:bold;">0.00%</span><span id="sem-grade-${i}" class="grade-badge"></span></div></div>
-                    <table><thead><tr><th>اسم المادة (الرمز)</th><th style="width:10%">الوحدات</th><th style="width:12%">الدرجة</th><th style="width:15%">التقدير</th><th style="width:15%">الإعادة</th><th class="no-print" style="width:8%"></th></tr></thead><tbody id="tbody-${i}"></tbody></table>
-                    <button class="no-print" style="margin:15px; cursor:pointer; padding:8px 15px; border-radius:8px; background:var(--primary); color:var(--white); border:none;" onclick="addRow(${i})">+ إضافة مادة من الشجرة</button>`;
-                container.appendChild(div);
+                const section = document.createElement('div');
+                section.className = 'sem-section';
+                section.innerHTML = `
+                    <div class="sem-head">
+                        <span class="sem-title">الفصل الدراسي ${i}</span>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <span class="sem-stat"><span>المعدل:</span><span id="sem-avg-${i}">0.00%</span></span>
+                            <span class="sem-stat"><span>التقدير:</span><span id="sem-grade-${i}" class="grade-badge">-</span></span>
+                        </div>
+                    </div>
+                    <div class="sem-table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="subject-cell">اسم المادة (الرمز)</th>
+                                    <th style="width:11%">الوحدات</th>
+                                    <th style="width:12%">الدرجة</th>
+                                    <th style="width:15%">التقدير</th>
+                                    <th style="width:14%">الإعادة</th>
+                                    <th class="no-print" style="width:9%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-${i}"></tbody>
+                        </table>
+                    </div>
+                    <div class="section-footer no-print">
+                        <button class="add-btn" onclick="addRow(${i})">+ إضافة مادة من الشجرة</button>
+                    </div>`;
+                container.appendChild(section);
                 addRow(i);
             }
         } else if (count < currentSections) {
-            for (let i = currentSections; i > count; i--) { container.lastElementChild.remove(); }
+            for (let i = currentSections; i > count; i--) {
+                container.lastElementChild.remove();
+            }
         }
+
         calculate();
     }
+
     function addRow(semId) {
         const tbody = document.getElementById(`tbody-${semId}`);
         const tr = document.createElement('tr');
-        let options = subjectsData.map(s => `<option value="${s.hours}">${s.name}</option>`).join('');
-        tr.innerHTML = `<td><select onchange="updateRow(this)" style="width:90%; padding:5px;"><option value="0">-- اختر من الشجرة --</option>${options}<option value="custom">مادة أخرى (يدوي)</option></select></td><td><input type="number" class="h-val" value="0" readonly style="border:none; background:none; text-align:center; width:40px;"></td><td><input type="number" class="g-val" value="0" min="0" max="100" oninput="calculate()" style="width:55px; font-weight:bold;"></td><td><span class="grade-badge">-</span></td><td><button class="re-btn" onclick="this.classList.toggle('active'); calculate();">إعادة</button></td><td class="no-print"><button onclick="this.parentElement.parentElement.remove(); calculate();" style="border:none; background:none; cursor:pointer;">حذف</button></td>`;
+        const options = subjectsData.map(s => `<option value="${s.hours}">${s.name}</option>`).join('');
+        tr.innerHTML = `
+            <td class="subject-cell"><select onchange="updateRow(this)"><option value="0">-- اختر من الشجرة --</option>${options}<option value="custom">مادة أخرى (يدوي)</option></select></td>
+            <td><input type="number" class="h-val" value="0" readonly style="max-width:84px; text-align:center;"></td>
+            <td><input type="number" class="g-val" value="0" min="0" max="100" oninput="calculate()" style="max-width:90px; text-align:center;"></td>
+            <td><span class="grade-badge">-</span></td>
+            <td><button class="re-btn" onclick="this.classList.toggle('active'); calculate();">إعادة</button></td>
+            <td class="no-print"><button class="row-action-btn" onclick="this.parentElement.parentElement.remove(); calculate();">حذف</button></td>`;
         tbody.appendChild(tr);
     }
+
     function updateRow(sel) {
-        const hInput = sel.parentElement.nextElementSibling.querySelector('.h-val');
-        if(sel.value === "custom") { hInput.readOnly = false; hInput.style.border = "1px solid #ddd"; hInput.value = 2; }
-        else { hInput.readOnly = true; hInput.style.border = "none"; hInput.value = sel.value; }
+        const hInput = sel.parentElement.parentElement.querySelector('.h-val');
+        if (sel.value === 'custom') {
+            hInput.readOnly = false;
+            hInput.value = 2;
+        } else {
+            hInput.readOnly = true;
+            hInput.value = sel.value;
+        }
         calculate();
     }
+
+    function updateSummaryTargets(gpa, target) {
+        const msg = document.getElementById('targetMsg');
+        const goalStatusText = document.getElementById('goalStatusText');
+
+        if (parseFloat(gpa) > 0) {
+            if (gpa >= target) {
+                msg.innerText = 'تم تحقيق الهدف بنجاح';
+                msg.style.color = 'var(--success)';
+                goalStatusText.innerText = 'الهدف متحقق';
+            } else {
+                const remaining = (target - gpa).toFixed(2);
+                msg.innerText = `المتبقي للوصول: ${remaining}%`;
+                msg.style.color = 'var(--danger)';
+                goalStatusText.innerText = `متبقي ${remaining}%`;
+            }
+        } else {
+            msg.innerText = '';
+            msg.style.color = 'var(--muted)';
+            goalStatusText.innerText = 'جاهز للحساب';
+        }
+    }
+
     function calculate() {
-        let totalPoints = 0, gpaUnits = 0, earnedUnits = 0;
+        let totalPoints = 0;
+        let gpaUnits = 0;
+        let earnedUnits = 0;
         const target = parseFloat(document.getElementById('targetGPA').value) || 0;
+
         document.querySelectorAll('.sem-section').forEach((sec, idx) => {
-            let semP = 0, semH = 0;
+            let semP = 0;
+            let semH = 0;
+
             sec.querySelectorAll('tbody tr').forEach(row => {
                 const h = parseFloat(row.querySelector('.h-val').value) || 0;
                 const gradeInput = row.querySelector('.g-val');
@@ -137,31 +710,52 @@
                 if (g < 0) g = 0;
                 if (g > 100) g = 100;
                 gradeInput.value = g;
+
                 const isR = row.querySelector('.re-btn').classList.contains('active');
                 const mGrade = getGradeInfo(g);
                 const badge = row.querySelector('.grade-badge');
                 badge.innerText = mGrade.text;
                 badge.className = 'grade-badge ' + mGrade.class;
+
                 if (h > 0) {
-                    totalPoints += (g * h); gpaUnits += h; if (g >= 50 && !isR) earnedUnits += h; semP += (g * h); semH += h;
+                    totalPoints += g * h;
+                    gpaUnits += h;
+                    if (g >= 50 && !isR) earnedUnits += h;
+                    semP += g * h;
+                    semH += h;
                 }
             });
-            const sAvg = semH > 0 ? (semP / semH).toFixed(2) : "0.00";
+
+            const sAvg = semH > 0 ? (semP / semH).toFixed(2) : '0.00';
             const currentIdx = idx + 1;
-            if(document.getElementById(`sem-avg-${currentIdx}`)) {
-                document.getElementById(`sem-avg-${currentIdx}`).innerText = sAvg + "%";
+            const avgEl = document.getElementById(`sem-avg-${currentIdx}`);
+            const gradeEl = document.getElementById(`sem-grade-${currentIdx}`);
+            if (avgEl && gradeEl) {
+                avgEl.innerText = sAvg + '%';
                 const sGrade = getGradeInfo(parseFloat(sAvg));
-                const sBadge = document.getElementById(`sem-grade-${currentIdx}`);
-                sBadge.innerText = sGrade.text;
-                sBadge.className = 'grade-badge ' + sGrade.class;
+                gradeEl.innerText = sGrade.text;
+                gradeEl.className = 'grade-badge ' + sGrade.class;
             }
         });
-        const gpa = gpaUnits > 0 ? (totalPoints / gpaUnits).toFixed(2) : "0.00";
+
+        const gpa = gpaUnits > 0 ? (totalPoints / gpaUnits).toFixed(2) : '0.00';
         const gInfo = getGradeInfo(parseFloat(gpa));
-        ['f', 'p'].forEach(p => { document.getElementById(`${p}-gpa`).innerText = gpa + "%"; document.getElementById(`${p}-units`).innerText = earnedUnits; document.getElementById(`${p}-grade`).innerText = gInfo.text; });
-        const msg = document.getElementById('targetMsg');
-        if (parseFloat(gpa) > 0) { msg.innerText = gpa >= target ? "تم تحقيق الهدف" : `المتبقي للهدف: ${(target - gpa).toFixed(2)}%`; msg.style.color = gpa >= target ? "var(--success)" : "var(--danger)"; } else { msg.innerText = ""; }
+
+        document.getElementById('f-gpa').innerText = gpa + '%';
+        document.getElementById('f-grade').innerText = gInfo.text;
+        document.getElementById('f-units').innerText = earnedUnits;
+
+        document.getElementById('float-gpa').innerText = gpa + '%';
+        document.getElementById('float-grade').innerText = gInfo.text;
+        document.getElementById('float-units').innerText = earnedUnits;
+
+        document.getElementById('p-gpa').innerText = gpa + '%';
+        document.getElementById('p-grade').innerText = gInfo.text;
+        document.getElementById('p-units').innerText = earnedUnits;
+
+        updateSummaryTargets(parseFloat(gpa), target);
     }
+
     window.onload = function() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
